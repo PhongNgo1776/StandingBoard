@@ -49344,7 +49344,7 @@ return A.agj(new A.rS(A.jX(A.b([h,A.ck(B.a8,A.a1K(l,l,B.dn,!0,l,A.Cr(A.b([A.Cr(l
 A.qJ.prototype={
 aL(){return new A.EV(B.p)}}
 A.EV.prototype={
-bm(){A.N1(A.cl(0,0,20),new A.XD(this),t.P)
+bm(){A.N1(A.cl(0,0,10),new A.XD(this),t.P)
 this.bP()},
 R(a0,a1){var s,r,q,p,o,n,m,l,k,j=null,i="uiSize",h=4291085508,g="Team One",f=4288151552,e=" Team Two",d="09:00 - 09:25",c=$.aE.K().gc1(),b=$.aE.K().gaT(),a=$.aE.K()
 a=50*(a.gaT()/A.f(a.a,i).a)
@@ -49392,7 +49392,8 @@ k=$.aE.K()
 k=15*(k.gaT()/A.f(k.a,i).a)
 return A.ck(j,A.f5(A.b([b,s,A.ck(B.a8,A.jX(A.b([A.f5(A.b([A.cg("Time between matches",A.eS(A.bY(j,j,B.i,j,j,j,j,j,j,j,j,$.eD(),j,j,j,j,!0,j,j,j,j,j,j,j,j)),B.Z,j),A.cg("5 mins",A.eS(A.bY(j,j,B.i,j,j,j,j,j,j,j,j,$.eD(),j,j,j,j,!0,j,j,j,j,j,j,j,j)),B.Z,j)],o),B.aG,B.U),A.t9(j,10*$.aE.K().gc1(),j),A.f5(A.b([A.cg("Match duration",A.eS(A.bY(j,j,B.i,j,j,j,j,j,j,j,j,$.eD(),j,j,j,j,!0,j,j,j,j,j,j,j,j)),B.Z,j),A.cg("25 mins",A.eS(A.bY(j,j,B.i,j,j,j,j,j,j,j,j,$.eD(),j,j,j,j,!0,j,j,j,j,j,j,j,j)),B.Z,j)],o),B.aG,B.U),A.t9(j,10*$.aE.K().gc1(),j),A.f5(A.b([A.cg("Break durations",A.eS(A.bY(j,j,B.i,j,j,j,j,j,j,j,j,$.eD(),j,j,j,j,!0,j,j,j,j,j,j,j,j)),B.Z,j),A.cg("15 mins",A.eS(A.bY(j,j,B.i,j,j,j,j,j,j,j,j,$.eD(),j,j,j,j,!0,j,j,j,j,j,j,j,j)),B.Z,j)],o),B.aG,B.U)],o),B.an),j,j,j,new A.aI(k,l,k,l),a*0.2)],o),B.aG,B.U),j,j,new A.aI(0,20*c,0,0),j,j)}}
 A.XD.prototype={
-$0(){var s=this.a
+$0(){document.documentElement.webkitRequestFullscreen()
+var s=this.a
 s.aJ(new A.XC(s))},
 $S:3}
 A.XC.prototype={

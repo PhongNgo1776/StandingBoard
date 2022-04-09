@@ -42,7 +42,7 @@
       transform: translate(-50%, -50%)" />
 
   <script>
-    var serviceWorkerVersion = '2104041146';
+    var serviceWorkerVersion = '1162899151';
     var scriptLoaded = false;
     function loadMainDartJs() {
       if (scriptLoaded) {
@@ -53,7 +53,6 @@
       scriptTag.src = 'main.dart.js';
       scriptTag.type = 'application/javascript';
       document.body.append(scriptTag);
-      document.documentElement.requestFullscreen();
     }
 
     if ('serviceWorker' in navigator) {
