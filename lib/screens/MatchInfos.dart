@@ -28,6 +28,7 @@ class MatchInfos extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -197,15 +198,29 @@ class MatchInfos extends StatelessWidget {
             padding: EdgeInsets.symmetric(
               vertical: 10.h,
             ),
-            child: Text(
-              '0 - 0',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.anton(
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: FontSize.medium,
+            child: Column(
+              children: [
+                Text(
+                  '0 - 0',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.anton(
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: FontSize.medium,
+                    ),
+                  ),
                 ),
-              ),
+                Text(
+                  '0 - 1',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.anton(
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: FontSize.medium,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           Container(
@@ -213,6 +228,7 @@ class MatchInfos extends StatelessWidget {
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(
               vertical: 10.h,
+              horizontal: 15.w,
             ),
             child: Column(
               children: [
@@ -241,6 +257,7 @@ class MatchInfos extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(height: 10.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -266,6 +283,7 @@ class MatchInfos extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(height: 10.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
               children: [
