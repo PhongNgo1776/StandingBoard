@@ -1,0 +1,1 @@
+const TITLE_BG_COLOR = 0xFF980000;
