@@ -4,10 +4,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:standingboard/utils/colors.dart';
 import 'package:standingboard/utils/fonts.dart';
 
-class MatchInfos extends StatelessWidget {
+class MatchInfos extends StatefulWidget {
   const MatchInfos({
     Key key,
   }) : super(key: key);
+
+  @override
+  State<MatchInfos> createState() => _MatchInfosState();
+}
+
+class _MatchInfosState extends State<MatchInfos> {
+  String scores = '0 - 0';
+
+  @override
+  void initState() {
+    Future.delayed(Duration(seconds: 20), () {
+      setState(() {
+        scores = '0 - 2';
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +218,7 @@ class MatchInfos extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  '0 - 0',
+                  scores,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.anton(
                     textStyle: TextStyle(

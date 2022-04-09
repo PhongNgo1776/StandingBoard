@@ -45,7 +45,6 @@
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {
-      document.documentElement.requestFullscreen();
       if (scriptLoaded) {
         return;
       }
@@ -54,6 +53,7 @@
       scriptTag.src = 'main.dart.js';
       scriptTag.type = 'application/javascript';
       document.body.append(scriptTag);
+      document.documentElement.requestFullscreen();
     }
 
     if ('serviceWorker' in navigator) {
