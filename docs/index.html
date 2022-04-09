@@ -30,7 +30,7 @@
   <title>Standing Board</title>
   <link rel="manifest" href="manifest.json">
   <script src="canvaskit/canvaskit.js"></script>
-  <link rel="preload" href="canvaskit/canvaskit.wasm">
+  <link rel="preload" href="canvaskit/canvaskit.wasm" as="fetch" crossOrigin="anonymous">
   </head>
   
   <body style="background: black;">
@@ -42,7 +42,7 @@
       transform: translate(-50%, -50%)" />
 
   <script>
-    var serviceWorkerVersion = '3910447177';
+    var serviceWorkerVersion = '1386405532';
     var scriptLoaded = false;
     function loadMainDartJs() {
       if (scriptLoaded) {
