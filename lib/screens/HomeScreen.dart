@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:standingboard/utils/colors.dart';
 import 'package:standingboard/utils/fonts.dart';
+import 'package:standingboard/view_models/GameProvider.dart';
 
 import 'MatchInfos.dart';
 
 // ignore: must_be_immutable
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    final viewModel = Provider.of<GameProvider>(context, listen: false);
+    viewModel.init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
