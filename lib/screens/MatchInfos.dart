@@ -1,6 +1,3 @@
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +19,6 @@ class _MatchInfosState extends State<MatchInfos> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 10), () {
-      document.documentElement.requestFullscreen();
       setState(() {
         scores = '0 - 2';
       });
