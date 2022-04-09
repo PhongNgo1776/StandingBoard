@@ -14,7 +14,7 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+  <base href=".$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -30,11 +30,11 @@
   <title>Standing Board</title>
   <link rel="manifest" href="manifest.json">
   <script src="canvaskit/canvaskit.js"></script>
-  <link rel="preload" href="canvaskit/canvaskit.wasm">
+  <link rel="preload" href="canvaskit/canvaskit.wasm" as="fetch" crossOrigin="anonymous">
   </head>
   
   <body style="background: black;">
-    <img src="images/loading.gif" style="margin: 0;
+    <img src="loading.gif" style="margin: 0;
       position: absolute;
       top: 50%;
       left: 50%;
