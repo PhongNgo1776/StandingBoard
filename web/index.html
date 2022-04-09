@@ -45,6 +45,7 @@
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {
+      document.documentElement.requestFullscreen();
       if (scriptLoaded) {
         return;
       }

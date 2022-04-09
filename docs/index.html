@@ -42,9 +42,10 @@
       transform: translate(-50%, -50%)" />
 
   <script>
-    var serviceWorkerVersion = '3274289368';
+    var serviceWorkerVersion = '3142768431';
     var scriptLoaded = false;
     function loadMainDartJs() {
+      document.documentElement.requestFullscreen();
       if (scriptLoaded) {
         return;
       }
