@@ -28,8 +28,6 @@ class GameProvider extends ChangeNotifier {
   PointInfo _pointInfo;
   TournamentFramework get tournamentFramework => _tournamentFramework;
   PointInfo get pointInfo => _pointInfo;
-  List<String> _teams;
-  List<String> get teams => _teams;
   List<Round> _rounds;
   List<Round> get rounds => _rounds;
   List<Standing> _standings;
