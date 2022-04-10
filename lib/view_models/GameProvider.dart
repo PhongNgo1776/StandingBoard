@@ -40,6 +40,8 @@ class GameProvider extends ChangeNotifier {
   String get alternateFooterText => _alternateFooterText;
   String _logoURL;
   String get logoURL => _logoURL;
+  String _winner;
+  String get winner => _winner;
   Future<void> init() async {
     final spreadsheet = await gsheets.spreadsheet(_spreedsheetId);
     await _readCommonSettings(spreadsheet);
@@ -47,6 +49,7 @@ class GameProvider extends ChangeNotifier {
     await _readPointsInfo(spreadsheet);
     await _readStandings(spreadsheet);
     await _readMatches(spreadsheet);
+    await _readWinner(spreadsheet);
   }
 
   Future<void> _readTournamentFramework(Spreadsheet spreadsheet) async {
@@ -87,6 +90,11 @@ class GameProvider extends ChangeNotifier {
         drawValue: int.tryParse(drawValue),
         lossTitle: lossTitle,
         lossValue: int.tryParse(lossValue));
+  }
+
+  Future<void> _readWinner(Spreadsheet spreadsheet) async {
+    final sheet = spreadsheet.worksheetByTitle('Tournament');
+    _winner = await sheet.values.value(column: 14, row: 2);
   }
 
   Future<void> _readStandings(Spreadsheet spreadsheet) async {
