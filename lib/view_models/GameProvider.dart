@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:gsheets/gsheets.dart';
+import 'package:standingboard/models/match.dart';
 import 'package:standingboard/models/point_info.dart';
+import 'package:standingboard/models/round.dart';
+import 'package:standingboard/models/standing.dart';
 import 'package:standingboard/models/tournament_framework.dart';
 
 const _credential = r'''
@@ -27,11 +30,25 @@ class GameProvider extends ChangeNotifier {
   PointInfo get pointInfo => _pointInfo;
   List<String> _teams;
   List<String> get teams => _teams;
+  List<Round> _rounds;
+  List<Round> get rounds => _rounds;
+  List<Standing> _standings;
+  List<Standing> get standings => _standings;
+  String _headerText;
+  String get headerText => _headerText;
+  String _footerText;
+  String get footerText => _footerText;
+  String _alternateFooterText;
+  String get alternateFooterText => _alternateFooterText;
+  String _logoURL;
+  String get logoURL => _logoURL;
   Future<void> init() async {
     final spreadsheet = await gsheets.spreadsheet(_spreedsheetId);
+    await _readCommonSettings(spreadsheet);
     await _readTournamentFramework(spreadsheet);
     await _readPointsInfo(spreadsheet);
-    await _readTeams(spreadsheet);
+    await _readStandings(spreadsheet);
+    await _readMatches(spreadsheet);
   }
 
   Future<void> _readTournamentFramework(Spreadsheet spreadsheet) async {
@@ -74,9 +91,53 @@ class GameProvider extends ChangeNotifier {
         lossValue: int.tryParse(lossValue));
   }
 
-  Future<void> _readTeams(Spreadsheet spreadsheet) async {
+  Future<void> _readStandings(Spreadsheet spreadsheet) async {
     final sheet = spreadsheet.worksheetByTitle('Tournament');
-    _teams = await sheet.values.column(10, fromRow: 2);
-    print(_teams);
+    var standingDatas =
+        await sheet.values.allRows(fromRow: 2, fromColumn: 12, length: 2);
+    _standings = <Standing>[];
+    standingDatas.forEach((data) {
+      _standings.add(Standing(team: data[0], point: int.tryParse(data[1])));
+    });
+
+    _standings.forEach((element) => element.debugLog());
+  }
+
+  Future<void> _readMatches(Spreadsheet spreadsheet) async {
+    final sheet = spreadsheet.worksheetByTitle('Tournament');
+    final roundDatas = await sheet.values.allRows(fromRow: 2, length: 6);
+    _rounds = <Round>[];
+    roundDatas.forEach((round) {
+      if (round.isNotEmpty) {
+        var newMatch = Match(
+            team1: round[1],
+            team2: round[2],
+            schedule: round[3],
+            result: MatchResult(
+                team1Goals: int.tryParse(round[4]),
+                team2Goals: int.tryParse(round[5])));
+        final roundNumber = int.tryParse(round[0]);
+        final existedRound = _rounds.firstWhere(
+            (element) => element.roundNumber == roundNumber,
+            orElse: () => null);
+        Round addedRound;
+        if (existedRound != null) {
+          addedRound = existedRound;
+          addedRound.matches.add(newMatch);
+        } else {
+          addedRound = Round(roundNumber: roundNumber, matches: [newMatch]);
+          _rounds.add(addedRound);
+        }
+      }
+    });
+    _rounds.forEach((round) => round.debugLog());
+  }
+
+  Future<void> _readCommonSettings(Spreadsheet spreadsheet) async {
+    final sheet = spreadsheet.worksheetByTitle('Setting');
+    _headerText = await sheet.values.value(column: 2, row: 1);
+    _footerText = await sheet.values.value(column: 2, row: 2);
+    _alternateFooterText = await sheet.values.value(column: 2, row: 3);
+    _logoURL = await sheet.values.value(column: 2, row: 4);
   }
 }
