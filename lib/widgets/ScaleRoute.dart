@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class ScaleRoute extends PageRouteBuilder {
   final Widget widget;
   final RouteSettings settings;
-  ScaleRoute({this.widget, this.settings})
+  ScaleRoute({required this.widget, required this.settings})
       : super(
           settings: settings,
           pageBuilder: (

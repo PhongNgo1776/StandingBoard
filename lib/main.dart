@@ -26,7 +26,7 @@ void main() {
                   case '/home':
                     return ScaleRoute(widget: HomeScreen(), settings: settings);
                   default:
-                    return ScaleRoute(widget: HomeScreen());
+                    return ScaleRoute(widget: HomeScreen(), settings: settings);
                 }
               },
             );

@@ -1,5 +1,9 @@
 class Match {
-  Match({this.team1, this.team2, this.schedule, this.result});
+  Match(
+      {required this.team1,
+      required this.team2,
+      required this.schedule,
+      required this.result});
   final String team1;
   final String team2;
   final String schedule;
@@ -11,7 +15,7 @@ class Match {
 }
 
 class MatchResult {
-  MatchResult({this.team1Goals, this.team2Goals});
+  MatchResult({required this.team1Goals, required this.team2Goals});
   final int team1Goals;
   final int team2Goals;
 }

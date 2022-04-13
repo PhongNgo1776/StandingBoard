@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:gsheets/gsheets.dart';
 import 'package:standingboard/models/match.dart';
@@ -24,94 +26,103 @@ const _spreedsheetId = '1PvwYBjGDINhwEKDE0Pm-6vHiAnMuHdSaMbORcD6cYlM';
 
 class GameProvider extends ChangeNotifier {
   final gsheets = GSheets(_credential);
-  TournamentFramework _tournamentFramework;
-  PointInfo _pointInfo;
-  TournamentFramework get tournamentFramework => _tournamentFramework;
-  PointInfo get pointInfo => _pointInfo;
-  List<Round> _rounds;
-  List<Round> get rounds => _rounds;
-  List<Standing> _standings;
-  List<Standing> get standings => _standings;
-  String _headerText;
-  String get headerText => _headerText;
-  String _footerText;
-  String get footerText => _footerText;
-  String _alternateFooterText;
-  String get alternateFooterText => _alternateFooterText;
-  String _logoURL;
-  String get logoURL => _logoURL;
-  String _winner;
-  String get winner => _winner;
-  Future<void> init() async {
-    final spreadsheet = await gsheets.spreadsheet(_spreedsheetId);
-    await _readCommonSettings(spreadsheet);
-    await _readTournamentFramework(spreadsheet);
-    await _readPointsInfo(spreadsheet);
-    await _readStandings(spreadsheet);
-    await _readMatches(spreadsheet);
-    await _readWinner(spreadsheet);
+  TournamentFramework? _tournamentFramework;
+  PointInfo? _pointInfo;
+  TournamentFramework get tournamentFramework => _tournamentFramework!;
+  PointInfo get pointInfo => _pointInfo!;
+  List<Round>? _rounds;
+  List<Round> get rounds => _rounds!;
+  List<Standing>? _standings;
+  List<Standing> get standings => _standings!;
+  String? _headerText;
+  String get headerText => _headerText!;
+  String? _footerText;
+  String get footerText => _footerText!;
+  String? _alternateFooterText;
+  String get alternateFooterText => _alternateFooterText!;
+  String? _logoURL;
+  String get logoURL => _logoURL!;
+  String? _winner;
+  String get winner => _winner!;
+
+  late Worksheet _sheet;
+  late Spreadsheet _spreadsheet;
+
+  Future<String> init() async {
+    _spreadsheet = await gsheets.spreadsheet(_spreedsheetId);
+    _sheet = _spreadsheet.worksheetByTitle('Tournament')!;
+    await _readCommonSettings(_spreadsheet);
+    await refreshData();
+    Timer.periodic(Duration(minutes: 1), (_) => refreshData());
+    return 'ok';
+  }
+
+  Future<void> refreshData() async {
+    await _readTournamentFramework(_spreadsheet);
+    await _readPointsInfo(_spreadsheet);
+    await _readStandings(_spreadsheet);
+    await _readMatches(_spreadsheet);
+    await _readWinner(_spreadsheet);
+    notifyListeners();
   }
 
   Future<void> _readTournamentFramework(Spreadsheet spreadsheet) async {
-    final sheet = spreadsheet.worksheetByTitle('Tournament');
-    final title = await sheet.values.value(column: 8, row: 1);
-    final timeBetweenMatchesName = await sheet.values.value(column: 8, row: 2);
-    final timeBetweenMatchesValue = await sheet.values.value(column: 9, row: 2);
-    final matchDurationName = await sheet.values.value(column: 8, row: 3);
-    final matchDurationValue = await sheet.values.value(column: 9, row: 3);
-    final breakDurationName = await sheet.values.value(column: 8, row: 4);
-    final breakDurationValue = await sheet.values.value(column: 9, row: 4);
+    final title = await _sheet.values.value(column: 8, row: 1);
+    final timeBetweenMatchesName = await _sheet.values.value(column: 8, row: 2);
+    final timeBetweenMatchesValue =
+        await _sheet.values.value(column: 9, row: 2);
+    final matchDurationName = await _sheet.values.value(column: 8, row: 3);
+    final matchDurationValue = await _sheet.values.value(column: 9, row: 3);
+    final breakDurationName = await _sheet.values.value(column: 8, row: 4);
+    final breakDurationValue = await _sheet.values.value(column: 9, row: 4);
 
     _tournamentFramework = TournamentFramework(
-        title: title,
-        timeBetweenMatchesName: timeBetweenMatchesName,
-        timeBetweenMatchesValue: int.tryParse(timeBetweenMatchesValue),
-        matchDurationName: matchDurationName,
-        matchDurationValue: int.tryParse(matchDurationValue),
-        breakDurationName: breakDurationName,
-        breakDurationValue: int.tryParse(breakDurationValue));
+      title: title,
+      timeBetweenMatchesName: timeBetweenMatchesName,
+      timeBetweenMatchesValue: int.tryParse(timeBetweenMatchesValue)!,
+      matchDurationName: matchDurationName,
+      matchDurationValue: int.tryParse(matchDurationValue)!,
+      breakDurationName: breakDurationName,
+      breakDurationValue: int.tryParse(breakDurationValue)!,
+    );
   }
 
   Future<void> _readPointsInfo(Spreadsheet spreadsheet) async {
-    final sheet = spreadsheet.worksheetByTitle('Tournament');
-    final title = await sheet.values.value(column: 8, row: 5);
-    final winTitle = await sheet.values.value(column: 8, row: 6);
-    final winValue = await sheet.values.value(column: 9, row: 6);
-    final drawTitle = await sheet.values.value(column: 8, row: 7);
-    final drawValue = await sheet.values.value(column: 9, row: 7);
-    final lossTitle = await sheet.values.value(column: 8, row: 8);
-    final lossValue = await sheet.values.value(column: 9, row: 8);
+    final title = await _sheet.values.value(column: 8, row: 5);
+    final winTitle = await _sheet.values.value(column: 8, row: 6);
+    final winValue = await _sheet.values.value(column: 9, row: 6);
+    final drawTitle = await _sheet.values.value(column: 8, row: 7);
+    final drawValue = await _sheet.values.value(column: 9, row: 7);
+    final lossTitle = await _sheet.values.value(column: 8, row: 8);
+    final lossValue = await _sheet.values.value(column: 9, row: 8);
 
     _pointInfo = PointInfo(
         title: title,
         winTitle: winTitle,
-        winValue: int.tryParse(winValue),
+        winValue: int.tryParse(winValue)!,
         drawTitle: drawTitle,
-        drawValue: int.tryParse(drawValue),
+        drawValue: int.tryParse(drawValue)!,
         lossTitle: lossTitle,
-        lossValue: int.tryParse(lossValue));
+        lossValue: int.tryParse(lossValue)!);
   }
 
   Future<void> _readWinner(Spreadsheet spreadsheet) async {
-    final sheet = spreadsheet.worksheetByTitle('Tournament');
-    _winner = await sheet.values.value(column: 14, row: 2);
+    _winner = await _sheet.values.value(column: 14, row: 2);
   }
 
   Future<void> _readStandings(Spreadsheet spreadsheet) async {
-    final sheet = spreadsheet.worksheetByTitle('Tournament');
     var standingDatas =
-        await sheet.values.allRows(fromRow: 2, fromColumn: 12, length: 2);
+        await _sheet.values.allRows(fromRow: 2, fromColumn: 12, length: 2);
     _standings = <Standing>[];
     standingDatas.forEach((data) {
-      _standings.add(Standing(team: data[0], point: int.tryParse(data[1])));
+      _standings!.add(Standing(team: data[0], point: int.tryParse(data[1])!));
     });
 
-    _standings.forEach((element) => element.debugLog());
+    _standings!.forEach((element) => element.debugLog());
   }
 
   Future<void> _readMatches(Spreadsheet spreadsheet) async {
-    final sheet = spreadsheet.worksheetByTitle('Tournament');
-    final roundDatas = await sheet.values.allRows(fromRow: 2, length: 6);
+    final roundDatas = await _sheet.values.allRows(fromRow: 2, length: 6);
     _rounds = <Round>[];
     roundDatas.forEach((round) {
       if (round.isNotEmpty) {
@@ -120,28 +131,29 @@ class GameProvider extends ChangeNotifier {
             team2: round[2],
             schedule: round[3],
             result: MatchResult(
-                team1Goals: int.tryParse(round[4]),
-                team2Goals: int.tryParse(round[5])));
+                team1Goals: int.tryParse(round[4])!,
+                team2Goals: int.tryParse(round[5])!));
         final roundNumber = int.tryParse(round[0]);
-        final existedRound = _rounds.firstWhere(
-            (element) => element.roundNumber == roundNumber,
-            orElse: () => null);
+        var existedRound = _rounds!.isNotEmpty
+            ? _rounds!.any((element) => element.roundNumber == roundNumber!)
+            : false;
         Round addedRound;
-        if (existedRound != null) {
-          addedRound = existedRound;
+        if (existedRound) {
+          addedRound = _rounds!
+              .firstWhere((element) => element.roundNumber == roundNumber!);
           addedRound.matches.add(newMatch);
         } else {
-          addedRound = Round(roundNumber: roundNumber, matches: [newMatch]);
-          _rounds.add(addedRound);
+          addedRound = Round(roundNumber: roundNumber!, matches: [newMatch]);
+          _rounds!.add(addedRound);
         }
       }
     });
-    _rounds.forEach((round) => round.debugLog());
+    _rounds!.forEach((round) => round.debugLog());
   }
 
   Future<void> _readCommonSettings(Spreadsheet spreadsheet) async {
     final sheet = spreadsheet.worksheetByTitle('Setting');
-    _headerText = await sheet.values.value(column: 2, row: 1);
+    _headerText = await sheet!.values.value(column: 2, row: 1);
     _footerText = await sheet.values.value(column: 2, row: 2);
     _alternateFooterText = await sheet.values.value(column: 2, row: 3);
     _logoURL = await sheet.values.value(column: 2, row: 4);

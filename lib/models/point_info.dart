@@ -1,12 +1,12 @@
 class PointInfo {
   PointInfo(
-      {this.title,
-      this.winTitle,
-      this.winValue,
-      this.drawTitle,
-      this.drawValue,
-      this.lossTitle,
-      this.lossValue});
+      {required this.title,
+      required this.winTitle,
+      required this.winValue,
+      required this.drawTitle,
+      required this.drawValue,
+      required this.lossTitle,
+      required this.lossValue});
   final String title;
   final String winTitle;
   final int winValue;

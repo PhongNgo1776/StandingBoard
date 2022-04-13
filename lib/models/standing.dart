@@ -1,5 +1,5 @@
 class Standing {
-  Standing({this.team, this.point});
+  Standing({required this.team, required this.point});
   final String team;
   final int point;
 
