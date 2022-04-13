@@ -26,21 +26,16 @@ class _MatchInfosState extends State<MatchInfos> {
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         // AsyncSnapshot<Your object type>
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Column(
-            children: [
-              Expanded(
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Please wait its loading...',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: FontSize.large,
-                    ),
-                  ),
-                ),
+          return Container(
+            height: 0.5.sh,
+            alignment: Alignment.center,
+            child: Text(
+              'Please wait its loading...',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: FontSize.large,
               ),
-            ],
+            ),
           );
         } else {
           if (snapshot.hasError)

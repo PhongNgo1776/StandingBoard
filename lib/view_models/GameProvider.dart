@@ -63,7 +63,7 @@ class GameProvider extends ChangeNotifier {
     await _readStandings(_spreadsheet);
     await _readMatches(_spreadsheet);
     await _readWinner(_spreadsheet);
-    notifyListeners();
+    // notifyListeners();
   }
 
   Future<void> _readTournamentFramework(Spreadsheet spreadsheet) async {
