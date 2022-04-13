@@ -53,7 +53,7 @@ class GameProvider extends ChangeNotifier {
     _sheet = _spreadsheet.worksheetByTitle('Tournament')!;
     await _readCommonSettings(_spreadsheet);
     await refreshData();
-    Timer.periodic(Duration(minutes: 1), (_) => refreshData());
+    Timer.periodic(Duration(milliseconds: 1100), (_) => refreshData());
     return 'ok';
   }
 
