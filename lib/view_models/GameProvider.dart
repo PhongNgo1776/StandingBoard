@@ -30,10 +30,10 @@ class GameProvider extends ChangeNotifier {
   PointInfo? _pointInfo;
   TournamentFramework get tournamentFramework => _tournamentFramework!;
   PointInfo get pointInfo => _pointInfo!;
-  List<Round>? _rounds;
-  List<Round> get rounds => _rounds!;
-  List<Standing>? _standings;
-  List<Standing> get standings => _standings!;
+  List<Round> _rounds = <Round>[];
+  List<Round> get rounds => _rounds;
+  List<Standing> _standings = <Standing>[];
+  List<Standing> get standings => _standings;
   String? _headerText;
   String get headerText => _headerText!;
   String? _footerText;
@@ -44,6 +44,7 @@ class GameProvider extends ChangeNotifier {
   String get logoURL => _logoURL!;
   String? _winner;
   String get winner => _winner!;
+  bool loadedData = false;
 
   late Worksheet _sheet;
   late Spreadsheet _spreadsheet;
@@ -52,18 +53,24 @@ class GameProvider extends ChangeNotifier {
     _spreadsheet = await gsheets.spreadsheet(_spreedsheetId);
     _sheet = _spreadsheet.worksheetByTitle('Tournament')!;
     await _readCommonSettings(_spreadsheet);
-    await refreshData();
-    Timer.periodic(Duration(milliseconds: 1100), (_) => refreshData());
+
+    try {
+      await fetchNewData();
+    } catch (e) {
+    } finally {
+      Timer.periodic(Duration(seconds: 10), (_) => fetchNewData());
+    }
     return 'ok';
   }
 
-  Future<void> refreshData() async {
+  Future<void> fetchNewData() async {
+    print('----------REFRESH DATA');
     await _readTournamentFramework(_spreadsheet);
     await _readPointsInfo(_spreadsheet);
     await _readStandings(_spreadsheet);
     await _readMatches(_spreadsheet);
     await _readWinner(_spreadsheet);
-    // notifyListeners();
+    notifyListeners();
   }
 
   Future<void> _readTournamentFramework(Spreadsheet spreadsheet) async {
@@ -115,10 +122,10 @@ class GameProvider extends ChangeNotifier {
         await _sheet.values.allRows(fromRow: 2, fromColumn: 12, length: 2);
     _standings = <Standing>[];
     standingDatas.forEach((data) {
-      _standings!.add(Standing(team: data[0], point: int.tryParse(data[1])!));
+      _standings.add(Standing(team: data[0], point: int.tryParse(data[1])!));
     });
 
-    _standings!.forEach((element) => element.debugLog());
+    _standings.forEach((element) => element.debugLog());
   }
 
   Future<void> _readMatches(Spreadsheet spreadsheet) async {
@@ -134,21 +141,21 @@ class GameProvider extends ChangeNotifier {
                 team1Goals: int.tryParse(round[4])!,
                 team2Goals: int.tryParse(round[5])!));
         final roundNumber = int.tryParse(round[0]);
-        var existedRound = _rounds!.isNotEmpty
-            ? _rounds!.any((element) => element.roundNumber == roundNumber!)
+        var existedRound = _rounds.isNotEmpty
+            ? _rounds.any((element) => element.roundNumber == roundNumber!)
             : false;
         Round addedRound;
         if (existedRound) {
-          addedRound = _rounds!
+          addedRound = _rounds
               .firstWhere((element) => element.roundNumber == roundNumber!);
           addedRound.matches.add(newMatch);
         } else {
           addedRound = Round(roundNumber: roundNumber!, matches: [newMatch]);
-          _rounds!.add(addedRound);
+          _rounds.add(addedRound);
         }
       }
     });
-    _rounds!.forEach((round) => round.debugLog());
+    _rounds.forEach((round) => round.debugLog());
   }
 
   Future<void> _readCommonSettings(Spreadsheet spreadsheet) async {
