@@ -44,6 +44,8 @@ class GameProvider extends ChangeNotifier {
   String get logoURL => _logoURL!;
   String? _winner;
   String get winner => _winner!;
+
+  late List<List<String>> _dataRows;
   bool loadedData = false;
 
   late Worksheet _sheet;
@@ -52,39 +54,39 @@ class GameProvider extends ChangeNotifier {
   Future<String> init() async {
     _spreadsheet = await gsheets.spreadsheet(_spreedsheetId);
     _sheet = _spreadsheet.worksheetByTitle('Tournament')!;
-    await _readCommonSettings(_spreadsheet);
 
     try {
       await fetchNewData();
     } catch (e) {
     } finally {
-      Timer.periodic(Duration(seconds: 10), (_) => fetchNewData());
+      Timer.periodic(Duration(minutes: 1), (_) => fetchNewData());
     }
     return 'ok';
   }
 
   Future<void> fetchNewData() async {
     print('----------REFRESH DATA');
-    await _readTournamentFramework(_spreadsheet);
-    await _readPointsInfo(_spreadsheet);
-    await _readStandings(_spreadsheet);
-    await _readMatches(_spreadsheet);
-    await _readWinner(_spreadsheet);
+    _dataRows = await _sheet.values.allRows(fromRow: 2, length: 14);
+    _readCommonSettings();
+    _readTournamentFramework();
+    _readPointsInfo();
+    _readStandings();
+    _readMatches();
+    _readWinner();
     notifyListeners();
   }
 
-  Future<void> _readTournamentFramework(Spreadsheet spreadsheet) async {
-    final title = await _sheet.values.value(column: 8, row: 1);
-    final timeBetweenMatchesName = await _sheet.values.value(column: 8, row: 2);
-    final timeBetweenMatchesValue =
-        await _sheet.values.value(column: 9, row: 2);
-    final matchDurationName = await _sheet.values.value(column: 8, row: 3);
-    final matchDurationValue = await _sheet.values.value(column: 9, row: 3);
-    final breakDurationName = await _sheet.values.value(column: 8, row: 4);
-    final breakDurationValue = await _sheet.values.value(column: 9, row: 4);
+  void _readTournamentFramework() {
+    const int fromIndex = 7;
+
+    final timeBetweenMatchesName = _dataRows[0][fromIndex];
+    final timeBetweenMatchesValue = _dataRows[0][fromIndex + 1];
+    final matchDurationName = _dataRows[1][fromIndex];
+    final matchDurationValue = _dataRows[1][fromIndex + 1];
+    final breakDurationName = _dataRows[2][fromIndex];
+    final breakDurationValue = _dataRows[2][fromIndex + 1];
 
     _tournamentFramework = TournamentFramework(
-      title: title,
       timeBetweenMatchesName: timeBetweenMatchesName,
       timeBetweenMatchesValue: int.tryParse(timeBetweenMatchesValue)!,
       matchDurationName: matchDurationName,
@@ -92,55 +94,64 @@ class GameProvider extends ChangeNotifier {
       breakDurationName: breakDurationName,
       breakDurationValue: int.tryParse(breakDurationValue)!,
     );
+    _tournamentFramework!.printDebug();
   }
 
-  Future<void> _readPointsInfo(Spreadsheet spreadsheet) async {
-    final title = await _sheet.values.value(column: 8, row: 5);
-    final winTitle = await _sheet.values.value(column: 8, row: 6);
-    final winValue = await _sheet.values.value(column: 9, row: 6);
-    final drawTitle = await _sheet.values.value(column: 8, row: 7);
-    final drawValue = await _sheet.values.value(column: 9, row: 7);
-    final lossTitle = await _sheet.values.value(column: 8, row: 8);
-    final lossValue = await _sheet.values.value(column: 9, row: 8);
+  void _readPointsInfo() {
+    const fromIndex = 7;
+    const rowIndex = 3;
+    final winTitle = _dataRows[rowIndex + 1][fromIndex];
+
+    final winValue = _dataRows[rowIndex + 1][fromIndex + 1];
+    final drawTitle = _dataRows[rowIndex + 2][fromIndex];
+    final drawValue = _dataRows[rowIndex + 2][fromIndex + 1];
+    final lossTitle = _dataRows[rowIndex + 3][fromIndex];
+    final lossValue = _dataRows[rowIndex + 3][fromIndex + 1];
 
     _pointInfo = PointInfo(
-        title: title,
         winTitle: winTitle,
         winValue: int.tryParse(winValue)!,
         drawTitle: drawTitle,
         drawValue: int.tryParse(drawValue)!,
         lossTitle: lossTitle,
         lossValue: int.tryParse(lossValue)!);
+    _pointInfo!.printDebug();
   }
 
-  Future<void> _readWinner(Spreadsheet spreadsheet) async {
-    _winner = await _sheet.values.value(column: 14, row: 2);
+  Future<void> _readWinner() async {
+    if (_dataRows[0].length >= 14) {
+      _winner = _dataRows[0][13];
+    }
   }
 
-  Future<void> _readStandings(Spreadsheet spreadsheet) async {
-    var standingDatas =
-        await _sheet.values.allRows(fromRow: 2, fromColumn: 12, length: 2);
+  void _readStandings() {
+    const fromIndex = 11;
+    const rowIdex = 1;
     _standings = <Standing>[];
-    standingDatas.forEach((data) {
-      _standings.add(Standing(team: data[0], point: int.tryParse(data[1])!));
-    });
+    for (int i = rowIdex; i < _dataRows.length; i++) {
+      var dataRow = _dataRows[i];
+      if (dataRow.length < 13) continue;
+      var team = dataRow[fromIndex];
+      var point = dataRow[fromIndex + 1];
+      _standings.add(Standing(team: team, point: int.tryParse(point)!));
+    }
 
     _standings.forEach((element) => element.debugLog());
   }
 
-  Future<void> _readMatches(Spreadsheet spreadsheet) async {
-    final roundDatas = await _sheet.values.allRows(fromRow: 2, length: 6);
+  Future<void> _readMatches() async {
     _rounds = <Round>[];
-    roundDatas.forEach((round) {
-      if (round.isNotEmpty) {
+    _dataRows.forEach((dataRow) {
+      if (dataRow.isNotEmpty && dataRow[0].isNotEmpty) {
+        print(dataRow);
         var newMatch = Match(
-            team1: round[1],
-            team2: round[2],
-            schedule: round[3],
+            team1: dataRow[1],
+            team2: dataRow[2],
+            schedule: dataRow[3],
             result: MatchResult(
-                team1Goals: int.tryParse(round[4])!,
-                team2Goals: int.tryParse(round[5])!));
-        final roundNumber = int.tryParse(round[0]);
+                team1Goals: int.tryParse(dataRow[4])!,
+                team2Goals: int.tryParse(dataRow[5])!));
+        final roundNumber = int.tryParse(dataRow[0]);
         var existedRound = _rounds.isNotEmpty
             ? _rounds.any((element) => element.roundNumber == roundNumber!)
             : false;
@@ -155,14 +166,17 @@ class GameProvider extends ChangeNotifier {
         }
       }
     });
+
     _rounds.forEach((round) => round.debugLog());
   }
 
-  Future<void> _readCommonSettings(Spreadsheet spreadsheet) async {
-    final sheet = spreadsheet.worksheetByTitle('Setting');
-    _headerText = await sheet!.values.value(column: 2, row: 1);
-    _footerText = await sheet.values.value(column: 2, row: 2);
-    _alternateFooterText = await sheet.values.value(column: 2, row: 3);
-    _logoURL = await sheet.values.value(column: 2, row: 4);
+  void _readCommonSettings() {
+    const fromIndex = 8;
+    const rowIdex = 8;
+
+    _headerText = _dataRows[rowIdex][fromIndex];
+    _footerText = _dataRows[rowIdex + 1][fromIndex];
+    _alternateFooterText = _dataRows[rowIdex + 2][fromIndex];
+    _logoURL = _dataRows[rowIdex + 3][fromIndex];
   }
 }
