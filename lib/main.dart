@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:standingboard/widgets/ScaleRoute.dart';
-import 'view_models/GameProvider.dart';
-import 'screens/HomeScreen.dart';
+import 'package:standingboard/widgets/scale_route.dart';
+import 'view_models/game_provider.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(

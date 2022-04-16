@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:standingboard/utils/fonts.dart';
+import 'package:standingboard/view_models/game_provider.dart';
+
+class Footer extends StatelessWidget {
+  const Footer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var gameProvider = Provider.of<GameProvider>(context, listen: false);
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(vertical: 20.h),
+      color: Color(0xFF202020),
+      child: RichText(
+        text: TextSpan(
+            text: gameProvider.footerText,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: FontSize.small,
+            ),
+            children: [
+              TextSpan(
+                text: ' ${gameProvider.alternateFooterText}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ]),
+      ),
+    );
+  }
+}

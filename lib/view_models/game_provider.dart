@@ -35,13 +35,13 @@ class GameProvider extends ChangeNotifier {
   List<Standing> _standings = <Standing>[];
   List<Standing> get standings => _standings;
   String? _headerText;
-  String get headerText => _headerText!;
+  String get headerText => _headerText ?? '';
   String? _footerText;
-  String get footerText => _footerText!;
+  String get footerText => _footerText ?? '';
   String? _alternateFooterText;
-  String get alternateFooterText => _alternateFooterText!;
+  String get alternateFooterText => _alternateFooterText ?? '';
   String? _logoURL;
-  String get logoURL => _logoURL!;
+  String get logoURL => _logoURL ?? '';
   String? _winner;
   String get winner => _winner!;
 
@@ -50,6 +50,7 @@ class GameProvider extends ChangeNotifier {
 
   late Worksheet _sheet;
   late Spreadsheet _spreadsheet;
+  Timer? timer;
 
   Future<String> init() async {
     _spreadsheet = await gsheets.spreadsheet(_spreedsheetId);
@@ -59,7 +60,8 @@ class GameProvider extends ChangeNotifier {
       await fetchNewData();
     } catch (e) {
     } finally {
-      Timer.periodic(Duration(minutes: 1), (_) => fetchNewData());
+      timer?.cancel();
+      timer = Timer.periodic(Duration(seconds: 10), (_) => fetchNewData());
     }
     return 'ok';
   }
@@ -73,6 +75,7 @@ class GameProvider extends ChangeNotifier {
     _readStandings();
     _readMatches();
     _readWinner();
+    print('----------DONE DATA');
     notifyListeners();
   }
 
@@ -175,6 +178,7 @@ class GameProvider extends ChangeNotifier {
     const rowIdex = 8;
 
     _headerText = _dataRows[rowIdex][fromIndex];
+
     _footerText = _dataRows[rowIdex + 1][fromIndex];
     _alternateFooterText = _dataRows[rowIdex + 2][fromIndex];
     _logoURL = _dataRows[rowIdex + 3][fromIndex];
