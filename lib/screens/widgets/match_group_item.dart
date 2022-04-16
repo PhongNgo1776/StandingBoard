@@ -46,10 +46,7 @@ class MatchGroupItem extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: RoundNum(roundNum: roundNum),
-                      ),
+                      RoundNum(roundNum: roundNum),
                       Expanded(
                         flex: 6,
                         child: MatchUp(
@@ -123,24 +120,31 @@ class MatchSchedule extends StatelessWidget {
       padding: EdgeInsets.only(left: 5.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text(
-            firstSchedule,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.anton(
-              textStyle: TextStyle(
-                color: Colors.white,
-                fontSize: FontSize.medium,
+          Container(
+            padding: EdgeInsets.all(5.w),
+            child: Text(
+              firstSchedule,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.anton(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: FontSize.medium,
+                ),
               ),
             ),
           ),
-          Text(
-            secondSchedule ?? '',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.anton(
-              textStyle: TextStyle(
-                color: Colors.white,
-                fontSize: FontSize.medium,
+          Container(
+            padding: EdgeInsets.all(5.w),
+            child: Text(
+              secondSchedule ?? '',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.anton(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: FontSize.medium,
+                ),
               ),
             ),
           ),
@@ -299,24 +303,22 @@ class RoundNum extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 7.w),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.r),
-            color: Color(0xFF767676),
-          ),
-          child: Text(
-            roundNum,
-            style: TextStyle(
-              fontSize: FontSize.xlarge,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 10.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.r),
+        color: Color(0xFF767676),
+      ),
+      child: Text(
+        roundNum,
+        style: GoogleFonts.francoisOne(
+          textStyle: TextStyle(
+            fontSize: FontSize.xlarge,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
-      ],
+      ),
     );
   }
 }

@@ -115,7 +115,7 @@ class OtherInfo extends StatelessWidget {
             children: [
               TitleValueItem(
                 title: gameProvider.winner,
-                value: gameProvider.winner,
+                value: '0',
               ),
             ],
           ),
