@@ -67,36 +67,59 @@ class MatchGroupItem extends StatelessWidget {
               ),
               Expanded(
                 flex: 3,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 0.03.sw),
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Column(
-                    children: [
-                      Text(
-                        firstResult,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.anton(
-                          textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: FontSize.medium,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        secondResult!,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.anton(
-                          textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: FontSize.medium,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                child: Result(
+                    firstResult: firstResult, secondResult: secondResult),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Result extends StatelessWidget {
+  const Result({
+    Key? key,
+    required this.firstResult,
+    required this.secondResult,
+  }) : super(key: key);
+
+  final String firstResult;
+  final String? secondResult;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 0.03.sw),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(5.w),
+            child: Text(
+              firstResult,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.anton(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: FontSize.medium,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(5.w),
+            child: Text(
+              secondResult!,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.anton(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: FontSize.medium,
+                ),
+              ),
+            ),
           ),
         ],
       ),
