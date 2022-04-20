@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:standingboard/widgets/scale_route.dart';
 import 'view_models/game_provider.dart';
 import 'screens/home_screen.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() {
+  tz.initializeTimeZones();
   runApp(
     MultiProvider(
       providers: [
@@ -17,6 +20,7 @@ void main() {
           minTextAdapt: true,
           splitScreenMode: true,
           builder: () {
+            initializeDateFormatting('az');
             return MaterialApp(
               title: 'StandingBoard',
               debugShowCheckedModeBanner: false,
