@@ -27,15 +27,14 @@ class Header extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Image.network(
-                gameProvider.logoURL.isEmpty
-                    ? 'https://phongngo1776.github.io/StandingBoard/loading.gif'
-                    : gameProvider.logoURL,
+                gameProvider.setting?.logoURL ??
+                    'https://phongngo1776.github.io/StandingBoard/loading.gif',
                 width: 100.r,
               ),
               Container(
                 margin: EdgeInsets.only(left: 20.w),
                 child: Text(
-                  gameProvider.headerText,
+                  gameProvider.setting?.header ?? '',
                   style: GoogleFonts.anton(
                     textStyle: TextStyle(
                       color: Colors.white,

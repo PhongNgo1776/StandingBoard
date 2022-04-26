@@ -7,11 +7,11 @@ class PointInfo {
       required this.lossTitle,
       required this.lossValue});
   final String winTitle;
-  final int winValue;
+  final String winValue;
   final String drawTitle;
-  final int drawValue;
+  final String drawValue;
   final String lossTitle;
-  final int lossValue;
+  final String lossValue;
 
   void printDebug() {
     print('========= Points ==========');

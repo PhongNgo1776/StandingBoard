@@ -7,11 +7,11 @@ class TournamentFramework {
       required this.breakDurationName,
       required this.breakDurationValue});
   final String timeBetweenMatchesName;
-  final int timeBetweenMatchesValue;
+  final String timeBetweenMatchesValue;
   final String matchDurationName;
-  final int matchDurationValue;
+  final String matchDurationValue;
   final String breakDurationName;
-  final int breakDurationValue;
+  final String breakDurationValue;
 
   void printDebug() {
     print('========= Tournament framework ==========');
