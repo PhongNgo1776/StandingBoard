@@ -15,7 +15,7 @@ class Match {
 }
 
 class MatchResult {
-  MatchResult({required this.team1Goals, required this.team2Goals});
-  final int team1Goals;
-  final int team2Goals;
+  MatchResult({this.team1Goals, this.team2Goals});
+  final String? team1Goals;
+  final String? team2Goals;
 }

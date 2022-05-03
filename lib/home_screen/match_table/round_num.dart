@@ -16,7 +16,7 @@ class RoundNum extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? 14.h : 22.h,
+        vertical: isMobile ? 12.h : 22.h,
         horizontal: isMobile ? 20.w : 10.w,
       ),
       decoration: BoxDecoration(

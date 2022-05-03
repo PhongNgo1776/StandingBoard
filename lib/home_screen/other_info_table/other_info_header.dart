@@ -26,7 +26,7 @@ class OtherInfoHeader extends StatelessWidget {
         vertical: 5.h,
       ),
       decoration: BoxDecoration(
-        color: Color(TITLE_BG_COLOR),
+        color: TITLE_BG_COLOR,
         borderRadius: BorderRadius.circular(10.w),
       ),
       child: Text(title, style: titleTextStyle),

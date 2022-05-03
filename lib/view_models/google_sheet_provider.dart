@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:gsheets/gsheets.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:standingboard/models/match.dart';
 import 'package:standingboard/models/point_info.dart';
 import 'package:standingboard/models/round.dart';
+import 'package:standingboard/models/setting.dart';
 import 'package:standingboard/models/standing.dart';
 import 'package:standingboard/models/tournament_framework.dart';
 
@@ -22,9 +24,20 @@ const _credential = r'''
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/hockey-standings-board%40hockey-standings-board.iam.gserviceaccount.com"
 }
 ''';
-const _spreedsheetId = '1PvwYBjGDINhwEKDE0Pm-6vHiAnMuHdSaMbORcD6cYlM';
+const _spreedsheetId = '1xXAER0gElJ2Cety-_91hYtEtLZLoORXmkD-3in3NMYU';
 
-class GameProvider extends ChangeNotifier {
+const gsDateBase = 2209161600 / 86400;
+const gsDateFactor = 86400000;
+
+String timeFromGsheets(String value) {
+  final date = double.parse(value);
+  final millis = (date - gsDateBase) * gsDateFactor;
+  final dateTime =
+      DateTime.fromMillisecondsSinceEpoch(millis.round(), isUtc: true);
+  return Jiffy(dateTime).Hm;
+}
+
+class GoogleSheetProvider extends ChangeNotifier {
   final gsheets = GSheets(_credential);
   TournamentFramework? _tournamentFramework;
   PointInfo? _pointInfo;
@@ -34,14 +47,8 @@ class GameProvider extends ChangeNotifier {
   List<Round> get rounds => _rounds;
   List<Standing> _standings = <Standing>[];
   List<Standing> get standings => _standings;
-  String? _headerText;
-  String get headerText => _headerText ?? '';
-  String? _footerText;
-  String get footerText => _footerText ?? '';
-  String? _alternateFooterText;
-  String get alternateFooterText => _alternateFooterText ?? '';
-  String? _logoURL;
-  String get logoURL => _logoURL ?? '';
+  Setting? _setting;
+  Setting? get setting => _setting;
   String? _winner;
   String get winner => _winner!;
 
@@ -57,19 +64,23 @@ class GameProvider extends ChangeNotifier {
     _sheet = _spreadsheet.worksheetByTitle('Tournament')!;
 
     try {
-      await fetchNewData();
+      await _fetchSetting();
+      await _fetchTournamentData();
     } catch (e) {
     } finally {
       timer?.cancel();
-      timer = Timer.periodic(Duration(seconds: 10), (_) => fetchNewData());
+      timer = Timer.periodic(
+          Duration(seconds: _setting?.intervalReloading ?? 10),
+          (_) => _fetchTournamentData());
     }
     return 'ok';
   }
 
-  Future<void> fetchNewData() async {
-    print('----------REFRESH DATA');
-    _dataRows = await _sheet.values.allRows(fromRow: 2, length: 14);
-    _readCommonSettings();
+  Future<void> _fetchTournamentData() async {
+    print('----------FETCHING TOURNAMENT DATA');
+    _dataRows =
+        await _sheet.values.allRows(fromRow: 4, fromColumn: 2, length: 15);
+
     _readTournamentFramework();
     _readPointsInfo();
     _readStandings();
@@ -80,56 +91,58 @@ class GameProvider extends ChangeNotifier {
   }
 
   void _readTournamentFramework() {
-    const int fromIndex = 7;
-
-    final timeBetweenMatchesName = _dataRows[0][fromIndex];
-    final timeBetweenMatchesValue = _dataRows[0][fromIndex + 1];
-    final matchDurationName = _dataRows[1][fromIndex];
-    final matchDurationValue = _dataRows[1][fromIndex + 1];
-    final breakDurationName = _dataRows[2][fromIndex];
-    final breakDurationValue = _dataRows[2][fromIndex + 1];
+    const int fromColumnIndex = 12;
+    final timeBetweenMatchesName = _dataRows[0][fromColumnIndex];
+    var timeBetweenMatchesValue =
+        timeFromGsheets(_dataRows[0][fromColumnIndex + 1]);
+    final matchDurationName = _dataRows[1][fromColumnIndex];
+    final matchDurationValue =
+        timeFromGsheets(_dataRows[1][fromColumnIndex + 1]);
+    final breakDurationName = _dataRows[2][fromColumnIndex];
+    final breakDurationValue =
+        timeFromGsheets(_dataRows[2][fromColumnIndex + 1]);
 
     _tournamentFramework = TournamentFramework(
       timeBetweenMatchesName: timeBetweenMatchesName,
-      timeBetweenMatchesValue: int.tryParse(timeBetweenMatchesValue)!,
+      timeBetweenMatchesValue: timeBetweenMatchesValue,
       matchDurationName: matchDurationName,
-      matchDurationValue: int.tryParse(matchDurationValue)!,
+      matchDurationValue: matchDurationValue,
       breakDurationName: breakDurationName,
-      breakDurationValue: int.tryParse(breakDurationValue)!,
+      breakDurationValue: breakDurationValue,
     );
     _tournamentFramework!.printDebug();
   }
 
   void _readPointsInfo() {
-    const fromIndex = 7;
-    const rowIndex = 3;
-    final winTitle = _dataRows[rowIndex + 1][fromIndex];
+    const fromColumnIndex = 12;
+    const rowIndex = 5;
+    final winTitle = _dataRows[rowIndex][fromColumnIndex];
 
-    final winValue = _dataRows[rowIndex + 1][fromIndex + 1];
-    final drawTitle = _dataRows[rowIndex + 2][fromIndex];
-    final drawValue = _dataRows[rowIndex + 2][fromIndex + 1];
-    final lossTitle = _dataRows[rowIndex + 3][fromIndex];
-    final lossValue = _dataRows[rowIndex + 3][fromIndex + 1];
+    final winValue = _dataRows[rowIndex][fromColumnIndex + 1];
+    final drawTitle = _dataRows[rowIndex + 1][fromColumnIndex];
+    final drawValue = _dataRows[rowIndex + 1][fromColumnIndex + 1];
+    final lossTitle = _dataRows[rowIndex + 2][fromColumnIndex];
+    final lossValue = _dataRows[rowIndex + 2][fromColumnIndex + 1];
 
     _pointInfo = PointInfo(
         winTitle: winTitle,
-        winValue: int.tryParse(winValue)!,
+        winValue: winValue,
         drawTitle: drawTitle,
-        drawValue: int.tryParse(drawValue)!,
+        drawValue: drawValue,
         lossTitle: lossTitle,
-        lossValue: int.tryParse(lossValue)!);
+        lossValue: lossValue);
     _pointInfo!.printDebug();
   }
 
   Future<void> _readWinner() async {
     if (_dataRows[0].length >= 14) {
-      _winner = _dataRows[0][13];
+      _winner = _dataRows[0][14];
     }
   }
 
   void _readStandings() {
-    const fromIndex = 11;
-    const rowIdex = 1;
+    const fromIndex = 12;
+    const rowIdex = 11;
     _standings = <Standing>[];
     for (int i = rowIdex; i < _dataRows.length; i++) {
       var dataRow = _dataRows[i];
@@ -145,16 +158,20 @@ class GameProvider extends ChangeNotifier {
   Future<void> _readMatches() async {
     _rounds = <Round>[];
     _dataRows.forEach((dataRow) {
-      if (dataRow.isNotEmpty && dataRow[0].isNotEmpty) {
+      if (dataRow.isNotEmpty && dataRow[1].isNotEmpty) {
         print(dataRow);
         var newMatch = Match(
             team1: dataRow[1],
-            team2: dataRow[2],
-            schedule: dataRow[3],
+            team2: dataRow[3],
+            schedule:
+                '${timeFromGsheets(dataRow[5])} - ${timeFromGsheets(dataRow[6])}',
             result: MatchResult(
-                team1Goals: int.tryParse(dataRow[4])!,
-                team2Goals: int.tryParse(dataRow[5])!));
-        final roundNumber = int.tryParse(dataRow[0]);
+                team1Goals: dataRow[8] != "" ? dataRow[8] : "0",
+                team2Goals: dataRow[10] != "" ? dataRow[10] : "0"));
+        var roundNumber = int.tryParse(dataRow[0]);
+        if (roundNumber == null && _rounds.isNotEmpty) {
+          roundNumber = _rounds.last.roundNumber;
+        }
         var existedRound = _rounds.isNotEmpty
             ? _rounds.any((element) => element.roundNumber == roundNumber!)
             : false;
@@ -173,14 +190,14 @@ class GameProvider extends ChangeNotifier {
     _rounds.forEach((round) => round.debugLog());
   }
 
-  void _readCommonSettings() {
-    const fromIndex = 8;
-    const rowIdex = 8;
-
-    _headerText = _dataRows[rowIdex][fromIndex];
-
-    _footerText = _dataRows[rowIdex + 1][fromIndex];
-    _alternateFooterText = _dataRows[rowIdex + 2][fromIndex];
-    _logoURL = _dataRows[rowIdex + 3][fromIndex];
+  Future<void> _fetchSetting() async {
+    final sheet = _spreadsheet.worksheetByTitle('Setting')!;
+    final dataRows = await sheet.values.allRows(length: 2);
+    _setting = Setting(
+        header: dataRows[0][1],
+        footer: dataRows[1][1],
+        alternativeFooter: dataRows[2][1],
+        logoURL: dataRows[3][1],
+        intervalReloading: int.tryParse(dataRows[4][1]) ?? 10);
   }
 }

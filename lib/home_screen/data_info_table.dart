@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:standingboard/utils/utils.dart';
-import 'package:standingboard/view_models/game_provider.dart';
+import 'package:standingboard/view_models/google_sheet_provider.dart';
 import 'package:standingboard/widgets/custom_scrollbar.dart';
 
 import 'data_wrapper.dart';
@@ -21,10 +21,10 @@ class DataInfoTable extends StatefulWidget {
 }
 
 class _DataInfoTableState extends State<DataInfoTable> {
-  late GameProvider gameProvider;
+  late GoogleSheetProvider gameProvider;
   @override
   void initState() {
-    gameProvider = Provider.of<GameProvider>(context, listen: false);
+    gameProvider = Provider.of<GoogleSheetProvider>(context, listen: false);
     gameProvider.init();
     super.initState();
   }
@@ -54,7 +54,7 @@ class ColumnData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var gameProvider = Provider.of<GameProvider>(context, listen: false);
+    var gameProvider = Provider.of<GoogleSheetProvider>(context, listen: false);
     return Flex(
       direction: isMobile ? Axis.vertical : Axis.horizontal,
       children: [

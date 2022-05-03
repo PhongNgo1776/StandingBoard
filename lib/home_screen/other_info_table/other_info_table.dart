@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:standingboard/utils/utils.dart';
-import 'package:standingboard/view_models/game_provider.dart';
+import 'package:standingboard/view_models/google_sheet_provider.dart';
 
 import 'other_info_body_container.dart';
 import 'other_info_header.dart';
@@ -15,7 +15,7 @@ class OtherInfoTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var gameProvider = Provider.of<GameProvider>(context, listen: false);
+    var gameProvider = Provider.of<GoogleSheetProvider>(context, listen: false);
     return Column(
       children: [
         OtherInfoHeader(

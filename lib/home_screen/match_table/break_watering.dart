@@ -26,7 +26,7 @@ class BreakWatering extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Container(
-                    margin: EdgeInsets.only(bottom: 10.h, right: 5.w),
+                    margin: EdgeInsets.only(top: 5.h, bottom: 5.h, right: 5.w),
                     child: Text(
                       'Break - Watering',
                       textAlign: TextAlign.right,

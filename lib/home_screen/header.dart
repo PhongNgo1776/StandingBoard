@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/browser.dart' as tz;
-import 'package:standingboard/view_models/game_provider.dart';
+import 'package:standingboard/view_models/google_sheet_provider.dart';
 import 'package:timezone/timezone.dart';
 
 class Header extends StatelessWidget {
@@ -17,7 +17,7 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var gameProvider = Provider.of<GameProvider>(context, listen: false);
+    var gameProvider = Provider.of<GoogleSheetProvider>(context, listen: false);
     return Container(
       padding: EdgeInsets.symmetric(vertical: 0.03.sh, horizontal: 0.1.sw),
       child: Row(
@@ -27,15 +27,14 @@ class Header extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Image.network(
-                gameProvider.logoURL.isEmpty
-                    ? 'https://phongngo1776.github.io/StandingBoard/loading.gif'
-                    : gameProvider.logoURL,
+                gameProvider.setting?.logoURL ??
+                    'https://phongngo1776.github.io/StandingBoard/loading.gif',
                 width: 100.r,
               ),
               Container(
                 margin: EdgeInsets.only(left: 20.w),
                 child: Text(
-                  gameProvider.headerText,
+                  gameProvider.setting?.header ?? '',
                   style: GoogleFonts.anton(
                     textStyle: TextStyle(
                       color: Colors.white,

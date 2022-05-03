@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'home_screen/home_screen.dart';
-import 'view_models/game_provider.dart';
+import 'view_models/google_sheet_provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 void main() {
@@ -11,8 +11,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<GameProvider>(
-            create: (context) => GameProvider()),
+        ChangeNotifierProvider<GoogleSheetProvider>(
+            create: (context) => GoogleSheetProvider()),
       ],
       child: ScreenUtilInit(
           designSize: Size(1280, 1024),
