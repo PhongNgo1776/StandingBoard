@@ -16,7 +16,7 @@ class OtherInfoBodyContainer extends StatelessWidget {
       width: isMobile ? 0.95.sw : 0.2.sw,
       margin: EdgeInsets.only(right: isMobile ? 30.w : 0),
       padding: EdgeInsets.fromLTRB(
-        isMobile ? 0.1.sw : 15.w,
+        isMobile ? 0.05.sw : 15.w,
         0,
         isMobile ? 0.1.sw : 15.w,
         10.h,

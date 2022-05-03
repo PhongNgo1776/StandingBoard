@@ -56933,7 +56933,7 @@ A.m6.prototype={
 M(a,b){var s,r,q,p=null,o="uiSize",n=A.cX()?$.ak.G().gay()*0.95:$.ak.G().gay()*0.2
 if(A.cX()){s=$.ak.G()
 s=30*(s.gay()/A.b(s.a,o).a)}else s=0
-if(A.cX())r=$.ak.G().gay()*0.1
+if(A.cX())r=$.ak.G().gay()*0.05
 else{r=$.ak.G()
 r=15*(r.gay()/A.b(r.a,o).a)}if(A.cX())q=$.ak.G().gay()*0.1
 else{q=$.ak.G()
@@ -63133,8 +63133,8 @@ s($,"ayM","zv",()=>new A.Hh(A.bI("/",!0),A.bI("(^[a-zA-Z][-+.a-zA-Z\\d]*://|[^/]
 s($,"ayK","ac1",()=>A.arM())
 s($,"aA5","akf",()=>!t.Cm.b(A.a([],t.Z)))
 r($,"ayf","ac_",()=>A.cX()?A.ms(36):A.ms(32))
-r($,"ayd","zt",()=>A.cX()?A.ms(26):A.ms(22))
-r($,"aye","zu",()=>A.cX()?A.ms(24):A.ms(18))
+r($,"ayd","zt",()=>A.cX()?A.ms(28):A.ms(22))
+r($,"aye","zu",()=>A.cX()?A.ms(26):A.ms(18))
 r($,"ayg","ac0",()=>A.cX()?A.ms(20):A.ms(14))
 r($,"aBb","acj",()=>{var q=null
 return A.o_(A.cF(q,q,B.k,q,q,q,q,q,q,q,q,$.zt(),q,q,q,q,!0,q,q,q,q,q,q,q,q))})
