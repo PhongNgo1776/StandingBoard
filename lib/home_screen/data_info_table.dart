@@ -63,13 +63,11 @@ class ColumnData extends StatelessWidget {
           header: MatchGroupHeader(titleTextStyle: titleTextStyle),
           body: gameProvider.rounds.isEmpty ? LoadingMsg() : MatchGroupBody(),
         ),
-        // Container(
-        //   margin: EdgeInsets.only(top: isMobile ? 30.h : 0),
-        //   child: DataWrapper(
-        //     flex: isMobile ? null : 2,
-        //     body: gameProvider.rounds.isEmpty ? SizedBox() : OtherInfoTable(),
-        //   ),
-        // ),
+        SizedBox(height: isMobile ? 30.h : 0),
+        DataWrapper(
+          flex: isMobile ? null : 2,
+          body: gameProvider.rounds.isEmpty ? SizedBox() : OtherInfoTable(),
+        ),
       ],
     );
   }
