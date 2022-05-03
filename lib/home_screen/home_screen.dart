@@ -2,10 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:standingboard/screens/widgets/data_info_table.dart';
-import 'package:standingboard/screens/widgets/footer.dart';
-import 'package:standingboard/screens/widgets/header.dart';
 import 'package:standingboard/view_models/game_provider.dart';
+
+import 'data_info_table.dart';
+import 'footer.dart';
+import 'header.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

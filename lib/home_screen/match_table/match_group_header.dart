@@ -1,34 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:standingboard/screens/widgets/other_info_header.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:standingboard/utils/colors.dart';
-import 'package:standingboard/utils/utils.dart';
-
-class TableHeader extends StatelessWidget {
-  TableHeader({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 8,
-          child: MatchGroupHeader(
-            titleTextStyle: titleTextStyle,
-          ),
-        ),
-        Expanded(
-          flex: 2,
-          child: OtherInfoHeader(
-            title: 'Tournament framework',
-          ),
-        ),
-      ],
-    );
-  }
-}
+import 'package:standingboard/utils/fonts.dart';
 
 class MatchGroupHeader extends StatelessWidget {
   const MatchGroupHeader({
@@ -103,6 +77,46 @@ class MatchGroupHeader extends StatelessWidget {
             ),
           ),
         )
+      ],
+    );
+  }
+}
+
+class TitleValueItem extends StatelessWidget {
+  const TitleValueItem({
+    Key? key,
+    required this.title,
+    required this.value,
+  }) : super(key: key);
+
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.francoisOne(
+            textStyle: TextStyle(
+              color: Colors.white,
+              fontSize: FontSize.small,
+            ),
+          ),
+        ),
+        Text(
+          value,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.francoisOne(
+            textStyle: TextStyle(
+              color: Colors.white,
+              fontSize: FontSize.small,
+            ),
+          ),
+        ),
       ],
     );
   }

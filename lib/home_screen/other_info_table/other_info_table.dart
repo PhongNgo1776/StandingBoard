@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:standingboard/utils/fonts.dart';
+import 'package:standingboard/utils/utils.dart';
 import 'package:standingboard/view_models/game_provider.dart';
 
+import 'other_info_body_container.dart';
 import 'other_info_header.dart';
+import 'title_value_item.dart';
 
-class OtherInfo extends StatelessWidget {
-  const OtherInfo({
+class OtherInfoTable extends StatelessWidget {
+  const OtherInfoTable({
     Key? key,
   }) : super(key: key);
 
@@ -17,12 +18,11 @@ class OtherInfo extends StatelessWidget {
     var gameProvider = Provider.of<GameProvider>(context, listen: false);
     return Column(
       children: [
-        Container(
-          width: 0.2.sw,
-          padding: EdgeInsets.symmetric(
-            vertical: 10.h,
-            horizontal: 15.w,
-          ),
+        OtherInfoHeader(
+          title: 'Tournament framework',
+          needMarginTop: false,
+        ),
+        OtherInfoBodyContainer(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -32,14 +32,12 @@ class OtherInfo extends StatelessWidget {
                         .toString() +
                     ' mins',
               ),
-              SizedBox(height: 10.h),
               TitleValueItem(
                 title: gameProvider.tournamentFramework.matchDurationName,
                 value: gameProvider.tournamentFramework.matchDurationValue
                         .toString() +
                     ' mins',
               ),
-              SizedBox(height: 10.h),
               TitleValueItem(
                 title: gameProvider.tournamentFramework.breakDurationName,
                 value: gameProvider.tournamentFramework.breakDurationValue
@@ -49,16 +47,8 @@ class OtherInfo extends StatelessWidget {
             ],
           ),
         ),
-        OtherInfoHeader(
-          title: 'Points',
-          marginTop: 30,
-        ),
-        Container(
-          width: 0.2.sw,
-          padding: EdgeInsets.symmetric(
-            vertical: 10.h,
-            horizontal: 15.w,
-          ),
+        OtherInfoHeader(title: 'Points'),
+        OtherInfoBodyContainer(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -66,12 +56,10 @@ class OtherInfo extends StatelessWidget {
                 title: gameProvider.pointInfo.winTitle,
                 value: gameProvider.pointInfo.winValue.toString() + ' points',
               ),
-              SizedBox(height: 10.h),
               TitleValueItem(
                 title: gameProvider.pointInfo.drawTitle,
                 value: gameProvider.pointInfo.drawValue.toString() + ' points',
               ),
-              SizedBox(height: 10.h),
               TitleValueItem(
                 title: gameProvider.pointInfo.lossTitle,
                 value: gameProvider.pointInfo.lossValue.toString() + ' points',
@@ -79,16 +67,8 @@ class OtherInfo extends StatelessWidget {
             ],
           ),
         ),
-        OtherInfoHeader(
-          title: 'Standings',
-          marginTop: 30,
-        ),
-        Container(
-          width: 0.2.sw,
-          padding: EdgeInsets.symmetric(
-            vertical: 10.h,
-            horizontal: 15.w,
-          ),
+        OtherInfoHeader(title: 'Standings'),
+        OtherInfoBodyContainer(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: List.generate(
@@ -100,16 +80,8 @@ class OtherInfo extends StatelessWidget {
             ),
           ),
         ),
-        OtherInfoHeader(
-          title: 'Winner 2022',
-          marginTop: 30,
-        ),
-        Container(
-          width: 0.2.sw,
-          padding: EdgeInsets.symmetric(
-            vertical: 10.h,
-            horizontal: 15.w,
-          ),
+        OtherInfoHeader(title: 'Winner 2022'),
+        OtherInfoBodyContainer(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -120,46 +92,7 @@ class OtherInfo extends StatelessWidget {
             ],
           ),
         ),
-      ],
-    );
-  }
-}
-
-class TitleValueItem extends StatelessWidget {
-  const TitleValueItem({
-    Key? key,
-    required this.title,
-    required this.value,
-  }) : super(key: key);
-
-  final String title;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.francoisOne(
-            textStyle: TextStyle(
-              color: Colors.white,
-              fontSize: FontSize.small,
-            ),
-          ),
-        ),
-        Text(
-          value,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.francoisOne(
-            textStyle: TextStyle(
-              color: Colors.white,
-              fontSize: FontSize.small,
-            ),
-          ),
-        ),
+        SizedBox(height: isMobile ? 20.h : 0)
       ],
     );
   }

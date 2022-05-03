@@ -19,7 +19,7 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     var gameProvider = Provider.of<GameProvider>(context, listen: false);
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 0.05.sh, horizontal: 0.1.sw),
+      padding: EdgeInsets.symmetric(vertical: 0.03.sh, horizontal: 0.1.sw),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -86,11 +86,11 @@ class _ClockState extends State<Clock> {
     return Container(
       child: Text(
         '$formattedTime',
-        style: GoogleFonts.changa(
+        style: GoogleFonts.anton(
           textStyle: TextStyle(
-            fontSize: 60.sp,
+            fontSize: 40.sp,
             fontWeight: FontWeight.w500,
-            color: Colors.redAccent,
+            color: Color.fromRGBO(196, 196, 196, 1),
           ),
         ),
       ),

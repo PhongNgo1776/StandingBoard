@@ -16,7 +16,7 @@ class LoadingMsg extends StatelessWidget {
         'Please wait its loading...',
         style: TextStyle(
           color: Colors.white,
-          fontSize: FontSize.large,
+          fontSize: FontSize.xlarge,
         ),
       ),
     );
