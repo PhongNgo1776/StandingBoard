@@ -30,8 +30,6 @@ dependencies:
   flutter:
     sdk: flutter
   
-  enum_to_string: ^1.0.13
-  shimmer: ^1.1.1
   google_fonts: ^2.3.1
   cupertino_icons: ^1.0.2
   provider: ^6.0.1
@@ -41,7 +39,7 @@ dependencies:
   timezone: ^0.8.0
   intl: ^0.17.0
   get: ^4.6.1
-  jiffy: ^5.0.0
+  # jiffy: ^5.0.0
 
 dev_dependencies:
   flutter_test:
