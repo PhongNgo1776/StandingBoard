@@ -6,6 +6,8 @@ import 'home_screen/home_screen.dart';
 import 'view_models/google_sheet_provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
+import 'view_models/time_provider.dart';
+
 void main() {
   tz.initializeTimeZones();
   runApp(
@@ -13,6 +15,8 @@ void main() {
       providers: [
         ChangeNotifierProvider<GoogleSheetProvider>(
             create: (context) => GoogleSheetProvider()),
+        ChangeNotifierProvider<TimeProvider>(
+            create: (context) => TimeProvider()),
       ],
       child: ScreenUtilInit(
           designSize: Size(1280, 1024),

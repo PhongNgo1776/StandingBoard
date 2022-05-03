@@ -1,14 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/browser.dart' as tz;
 import 'package:standingboard/view_models/google_sheet_provider.dart';
-import 'package:timezone/timezone.dart';
+import 'package:standingboard/view_models/time_provider.dart';
 
 class Header extends StatelessWidget {
   const Header({
@@ -62,29 +58,22 @@ class Clock extends StatefulWidget {
 }
 
 class _ClockState extends State<Clock> {
-  TZDateTime? now;
-  DateFormat dateFormat = DateFormat('HH:mm', 'nb_NO');
-
+  late TimeProvider timeProvider;
   @override
   void initState() {
-    tz.initializeTimeZone();
+    timeProvider = Provider.of<TimeProvider>(context, listen: false);
     SchedulerBinding.instance?.addPostFrameCallback((_) {
-      setup();
+      timeProvider.setup();
     });
     super.initState();
   }
 
-  Future<void> setup() async {
-    Timer.periodic(Duration(seconds: 1), (_) {
-      setState(() {});
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    timeProvider = Provider.of<TimeProvider>(context);
     return Container(
       child: Text(
-        '$formattedTime',
+        '${timeProvider.formattedTime}',
         style: GoogleFonts.anton(
           textStyle: TextStyle(
             fontSize: 40.sp,
@@ -94,12 +83,5 @@ class _ClockState extends State<Clock> {
         ),
       ),
     );
-  }
-
-  String get formattedTime {
-    var detroit = tz.getLocation('Europe/Oslo');
-    var now = tz.TZDateTime.now(detroit);
-
-    return dateFormat.format(now);
   }
 }

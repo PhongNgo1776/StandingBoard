@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:standingboard/utils/colors.dart';
 import 'package:standingboard/utils/fonts.dart';
+import 'package:standingboard/view_models/time_provider.dart';
 
 class MatchSchedule extends StatelessWidget {
   const MatchSchedule({
@@ -20,11 +22,8 @@ class MatchSchedule extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        MatchInfo(
-          schedule: firstSchedule,
-          isPlaying: true,
-        ),
-        MatchInfo(schedule: secondSchedule ?? ''),
+        MatchInfo(schedule: firstSchedule),
+        if (secondSchedule != null) MatchInfo(schedule: secondSchedule ?? ''),
       ],
     );
   }
@@ -34,16 +33,16 @@ class MatchInfo extends StatelessWidget {
   const MatchInfo({
     Key? key,
     required this.schedule,
-    this.isPlaying = false,
   }) : super(key: key);
 
-  final bool isPlaying;
   final String schedule;
 
   @override
   Widget build(BuildContext context) {
+    var timeProvider = Provider.of<TimeProvider>(context);
+    var isPlaying = timeProvider.isPlaying(schedule);
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 2.h),
+      margin: EdgeInsets.symmetric(vertical: 3.5.h),
       padding: EdgeInsets.only(left: 10.w),
       decoration: BoxDecoration(
         color: isPlaying ? GRAY_BG_COLOR : Colors.transparent,
