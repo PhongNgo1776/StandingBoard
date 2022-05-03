@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:gsheets/gsheets.dart';
-// import 'package:jiffy/jiffy.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:standingboard/models/match.dart';
 import 'package:standingboard/models/point_info.dart';
 import 'package:standingboard/models/round.dart';
@@ -34,8 +34,7 @@ String timeFromGsheets(String value) {
   final millis = (date - gsDateBase) * gsDateFactor;
   final dateTime =
       DateTime.fromMillisecondsSinceEpoch(millis.round(), isUtc: true);
-  // return Jiffy(dateTime).Hm;
-  return '10:10';
+  return Jiffy(dateTime).Hm;
 }
 
 class GoogleSheetProvider extends ChangeNotifier {

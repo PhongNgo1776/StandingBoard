@@ -37,9 +37,8 @@ dependencies:
   gsheets: ^0.4.2
   equatable: ^2.0.3
   timezone: ^0.8.0
-  intl: ^0.17.0
   get: ^4.6.1
-  # jiffy: ^5.0.0
+  jiffy: ^5.0.0
 
 dev_dependencies:
   flutter_test:
