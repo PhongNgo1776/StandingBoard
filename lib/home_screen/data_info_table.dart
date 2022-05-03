@@ -58,18 +58,19 @@ class ColumnData extends StatelessWidget {
     return Flex(
       direction: isMobile ? Axis.vertical : Axis.horizontal,
       children: [
-        DataWrapper(
-          flex: isMobile ? null : 8,
-          header: MatchGroupHeader(titleTextStyle: titleTextStyle),
-          body: gameProvider.rounds.isEmpty ? LoadingMsg() : MatchGroupBody(),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: isMobile ? 30.h : 0),
-          child: DataWrapper(
-            flex: isMobile ? null : 2,
-            body: gameProvider.rounds.isEmpty ? SizedBox() : OtherInfoTable(),
-          ),
-        ),
+        Container()
+        // DataWrapper(
+        //   flex: isMobile ? null : 8,
+        //   header: MatchGroupHeader(titleTextStyle: titleTextStyle),
+        //   body: gameProvider.rounds.isEmpty ? LoadingMsg() : MatchGroupBody(),
+        // ),
+        // Container(
+        //   margin: EdgeInsets.only(top: isMobile ? 30.h : 0),
+        //   child: DataWrapper(
+        //     flex: isMobile ? null : 2,
+        //     body: gameProvider.rounds.isEmpty ? SizedBox() : OtherInfoTable(),
+        //   ),
+        // ),
       ],
     );
   }
