@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:standingboard/utils/utils.dart';
 
 import 'break_watering.dart';
 import 'match_schedule.dart';
@@ -41,7 +42,7 @@ class MatchGroupItem extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              flex: 7,
+              flex: isMobile ? 8 : 7,
               child: Container(
                 padding: EdgeInsets.only(left: 50.w),
                 child: Row(
@@ -72,7 +73,7 @@ class MatchGroupItem extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 3,
+              flex: isMobile ? 2 : 3,
               child: Result(
                 firstResult: firstResult,
                 secondResult: secondResult,

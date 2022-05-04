@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:standingboard/utils/colors.dart';
 import 'package:standingboard/utils/fonts.dart';
+import 'package:standingboard/utils/utils.dart';
 
 class MatchGroupHeader extends StatelessWidget {
   const MatchGroupHeader({
@@ -17,7 +18,7 @@ class MatchGroupHeader extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          flex: 7,
+          flex: isMobile ? 8 : 7,
           child: Container(
             padding: EdgeInsets.fromLTRB(50.w, 5.h, 0, 5.h),
             decoration: BoxDecoration(
@@ -53,7 +54,7 @@ class MatchGroupHeader extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 3,
+          flex: isMobile ? 2 : 3,
           child: Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: 0.03.sw),

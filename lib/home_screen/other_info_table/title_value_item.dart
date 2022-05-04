@@ -26,7 +26,7 @@ class TitleValueItem extends StatelessWidget {
             style: GoogleFonts.francoisOne(
               textStyle: TextStyle(
                 color: Colors.white,
-                fontSize: FontSize.small,
+                fontSize: FontSize.medium,
               ),
             ),
           ),
@@ -36,7 +36,7 @@ class TitleValueItem extends StatelessWidget {
             style: GoogleFonts.francoisOne(
               textStyle: TextStyle(
                 color: Colors.white,
-                fontSize: FontSize.small,
+                fontSize: FontSize.medium,
               ),
             ),
           ),

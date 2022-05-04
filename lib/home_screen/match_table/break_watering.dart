@@ -14,7 +14,7 @@ class BreakWatering extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          flex: 7,
+          flex: isMobile ? 8 : 7,
           child: Container(
             padding: EdgeInsets.only(left: 50.w),
             child: Row(
@@ -42,13 +42,16 @@ class BreakWatering extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 3,
-                  child: Text(
-                    'Break - Watering',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: FontSize.xsmall,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
+                  child: Container(
+                    padding: EdgeInsets.only(right: isMobile ? 10.w : 0),
+                    child: Text(
+                      'Break - Watering',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: FontSize.small,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -57,7 +60,7 @@ class BreakWatering extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 3,
+          flex: isMobile ? 2 : 3,
           child: Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: 0.03.sw),

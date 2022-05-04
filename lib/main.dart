@@ -21,7 +21,7 @@ void main() {
             create: (context) => TimeProvider()),
       ],
       child: ScreenUtilInit(
-          designSize: isMobile ? Size(428, 926) : Size(1920, 1200),
+          designSize: isMobile ? Size(1280, 720) : Size(1920, 1200),
           minTextAdapt: true,
           splitScreenMode: true,
           builder: () {

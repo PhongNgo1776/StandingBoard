@@ -42,12 +42,14 @@ class MatchInfo extends StatelessWidget {
     var timeProvider = Provider.of<TimeProvider>(context);
     var isPlaying = timeProvider.isPlaying(schedule);
     return Container(
+      alignment: Alignment.center,
       margin: EdgeInsets.symmetric(vertical: 3.5.h),
       decoration: BoxDecoration(
         color: isPlaying ? GRAY_BG_COLOR : Colors.transparent,
         borderRadius: BorderRadius.circular(5.w),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: isPlaying
             ? MainAxisAlignment.spaceBetween
             : MainAxisAlignment.center,
@@ -58,7 +60,7 @@ class MatchInfo extends StatelessWidget {
             maintainAnimation: true,
             maintainState: true,
             child: Container(
-              margin: EdgeInsets.only(left: 10.w, right: 20.w),
+              margin: EdgeInsets.only(left: 10.w, right: 25.w),
               padding: EdgeInsets.symmetric(vertical: 1.2.h),
               child: Image.asset(
                 'images/left_arrow.png',
