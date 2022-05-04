@@ -29,11 +29,15 @@ class MatchUp extends StatelessWidget {
             leftTeamRound: leftTeamFirstRound,
             rightTeamRound: rightTeamFirstRound,
           ),
-          SizedBox(height: 5.h),
           if (leftTeamSecondRound != null)
-            MatchRow(
-              leftTeamRound: leftTeamSecondRound!,
-              rightTeamRound: rightTeamSecondRound!,
+            Column(
+              children: [
+                SizedBox(height: 5.h),
+                MatchRow(
+                  leftTeamRound: leftTeamSecondRound!,
+                  rightTeamRound: rightTeamSecondRound!,
+                ),
+              ],
             ),
         ],
       ),
