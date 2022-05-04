@@ -20,7 +20,7 @@ void main() {
             create: (context) => TimeProvider()),
       ],
       child: ScreenUtilInit(
-          designSize: Size(1280, 1024),
+          designSize: Size(1024, 768),
           minTextAdapt: true,
           splitScreenMode: true,
           builder: () {
