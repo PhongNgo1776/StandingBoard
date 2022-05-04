@@ -54,10 +54,11 @@ class MatchGroupItem extends StatelessWidget {
                     Expanded(
                       flex: 6,
                       child: MatchUp(
-                          leftTeamFirstRound: leftTeamFirstRound,
-                          rightTeamFirstRound: rightTeamFirstRound,
-                          leftTeamSecondRound: leftTeamSecondRound,
-                          rightTeamSecondRound: rightTeamSecondRound),
+                        leftTeamFirstRound: leftTeamFirstRound,
+                        rightTeamFirstRound: rightTeamFirstRound,
+                        leftTeamSecondRound: leftTeamSecondRound,
+                        rightTeamSecondRound: rightTeamSecondRound,
+                      ),
                     ),
                     Expanded(
                       flex: 3,

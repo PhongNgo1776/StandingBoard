@@ -23,6 +23,7 @@ class MatchUp extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           MatchRow(
             leftTeamRound: leftTeamFirstRound,
