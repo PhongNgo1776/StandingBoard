@@ -17809,7 +17809,7 @@ this.d=b
 this.a=c},
 awN(){var s,r,q,p,o,n,m,l,k,j=null
 A.awz()
-s=A.aqf(new A.FR(new A.a8e(),!0,!0,new A.a_(1024,768),j),A.a([A.adH(new A.a8f(),t._),A.adH(new A.a8g(),t.Lz)],t.Ds))
+s=A.aqf(new A.FR(new A.a8e(),!0,!0,new A.a_(1920,1200),j),A.a([A.adH(new A.a8f(),t._),A.adH(new A.a8g(),t.Lz)],t.Ds))
 if($.an==null){r=A.a([],t.GA)
 q=$.Q
 p=A.a([],t.Jh)
