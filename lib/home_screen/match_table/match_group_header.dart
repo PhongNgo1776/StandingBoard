@@ -19,10 +19,7 @@ class MatchGroupHeader extends StatelessWidget {
         Expanded(
           flex: 7,
           child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 50.w,
-              vertical: 5.h,
-            ),
+            padding: EdgeInsets.fromLTRB(50.w, 5.h, 0, 5.h),
             decoration: BoxDecoration(
               color: TITLE_BG_COLOR,
               borderRadius: BorderRadius.circular(10.w),
@@ -30,13 +27,10 @@ class MatchGroupHeader extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  flex: 1,
-                  child: Text(
-                    'Round',
-                    textAlign: TextAlign.left,
-                    style: titleTextStyle,
-                  ),
+                Text(
+                  'Round',
+                  textAlign: TextAlign.left,
+                  style: titleTextStyle,
                 ),
                 Expanded(
                   flex: 6,
@@ -50,7 +44,7 @@ class MatchGroupHeader extends StatelessWidget {
                   flex: 3,
                   child: Text(
                     'Match Schedules',
-                    textAlign: TextAlign.right,
+                    textAlign: TextAlign.center,
                     style: titleTextStyle,
                   ),
                 ),

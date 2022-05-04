@@ -47,7 +47,10 @@ class MatchGroupItem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    RoundNum(roundNum: roundNum),
+                    RoundNum(
+                      roundNum: roundNum,
+                      hasTwoMatches: leftTeamSecondRound != null,
+                    ),
                     Expanded(
                       flex: 6,
                       child: MatchUp(

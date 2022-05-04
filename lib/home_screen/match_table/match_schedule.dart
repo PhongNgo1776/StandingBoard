@@ -43,7 +43,6 @@ class MatchInfo extends StatelessWidget {
     var isPlaying = timeProvider.isPlaying(schedule);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 3.5.h),
-      padding: EdgeInsets.only(left: 10.w),
       decoration: BoxDecoration(
         color: isPlaying ? GRAY_BG_COLOR : Colors.transparent,
         borderRadius: BorderRadius.circular(5.w),
@@ -58,10 +57,14 @@ class MatchInfo extends StatelessWidget {
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            child: Image.asset(
-              'images/left_arrow.png',
-              width: 20.w,
-              color: Colors.black,
+            child: Container(
+              margin: EdgeInsets.only(left: 10.w, right: 20.w),
+              padding: EdgeInsets.symmetric(vertical: 1.2.h),
+              child: Image.asset(
+                'images/left_arrow.png',
+                width: 15.w,
+                color: Colors.black,
+              ),
             ),
           ),
           Text(
@@ -80,7 +83,13 @@ class MatchInfo extends StatelessWidget {
             maintainAnimation: true,
             maintainState: true,
             child: Container(
-              color: TITLE_BG_COLOR,
+              decoration: BoxDecoration(
+                color: TITLE_BG_COLOR,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(5.w),
+                  bottomRight: Radius.circular(5.w),
+                ),
+              ),
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: Text(
                 'NOW',

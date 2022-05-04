@@ -8,16 +8,19 @@ class RoundNum extends StatelessWidget {
   const RoundNum({
     Key? key,
     required this.roundNum,
+    this.hasTwoMatches = true,
   }) : super(key: key);
 
   final String roundNum;
+  final bool hasTwoMatches;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? 12.h : 22.h,
-        horizontal: isMobile ? 20.w : 10.w,
+        vertical:
+            hasTwoMatches ? (isMobile ? 12.h : 22.h) : (isMobile ? 3.h : 5.h),
+        horizontal: isMobile ? 20.w : 15.w,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.r),

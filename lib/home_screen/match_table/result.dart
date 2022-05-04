@@ -33,19 +33,20 @@ class Result extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(5.w),
-            child: Text(
-              secondResult!,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.anton(
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: FontSize.medium,
+          if (secondResult!.isNotEmpty)
+            Container(
+              padding: EdgeInsets.all(5.w),
+              child: Text(
+                secondResult!,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.anton(
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: FontSize.medium,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

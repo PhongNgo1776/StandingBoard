@@ -20,12 +20,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
-        body: Column(
-          children: [
-            Header(),
-            Expanded(flex: 8, child: DataInfoTable()),
-            Footer()
-          ],
+        body: InteractiveViewer(
+          minScale: 1,
+          maxScale: 2,
+          child: Column(
+            children: [
+              Header(),
+              Expanded(flex: 8, child: DataInfoTable()),
+              Footer()
+            ],
+          ),
         ),
       ),
     );
