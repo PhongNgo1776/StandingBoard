@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:standingboard/utils/utils.dart';
 import 'package:standingboard/view_models/google_sheet_provider.dart';
 
 import 'data_info_table.dart';
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.black,
         body: InteractiveViewer(
           minScale: 1,
-          maxScale: 2,
+          maxScale: isMobile ? 2 : 1,
           child: Column(
             children: [
               Header(),
