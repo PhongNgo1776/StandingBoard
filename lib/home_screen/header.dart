@@ -18,7 +18,7 @@ class Header extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: isMobile ? 0.015.sh : 0.03.sh,
-          horizontal: isMobile ? 0.05 : 0.1.sw),
+          horizontal: isMobile ? 0.05.sw : 0.1.sw),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
