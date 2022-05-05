@@ -200,4 +200,9 @@ class GoogleSheetProvider extends ChangeNotifier {
         logoURL: dataRows[3][1],
         intervalReloading: int.tryParse(dataRows[4][1]) ?? 10);
   }
+
+  String get winnerPoint => standings
+      .firstWhere((element) => element.team == winner)
+      .point
+      .toString();
 }

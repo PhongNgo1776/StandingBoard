@@ -87,7 +87,7 @@ class OtherInfoTable extends StatelessWidget {
             children: [
               TitleValueItem(
                 title: gameProvider.winner,
-                value: '0',
+                value: gameProvider.winnerPoint,
               ),
             ],
           ),
