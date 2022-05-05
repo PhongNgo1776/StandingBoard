@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:standingboard/utils/fonts.dart';
+import 'package:standingboard/utils/utils.dart';
 import 'package:standingboard/view_models/google_sheet_provider.dart';
 
 class Footer extends StatelessWidget {
@@ -14,7 +15,7 @@ class Footer extends StatelessWidget {
     var gameProvider = Provider.of<GoogleSheetProvider>(context, listen: false);
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(vertical: 20.h),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 10.h : 20.h),
       color: Color(0xFF202020),
       child: RichText(
         text: TextSpan(

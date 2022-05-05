@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:standingboard/utils/utils.dart';
 import 'package:standingboard/view_models/google_sheet_provider.dart';
 import 'package:standingboard/view_models/time_provider.dart';
 
@@ -15,7 +16,9 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     var gameProvider = Provider.of<GoogleSheetProvider>(context, listen: false);
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 0.03.sh, horizontal: 0.1.sw),
+      padding: EdgeInsets.symmetric(
+          vertical: isMobile ? 0.015.sh : 0.03.sh,
+          horizontal: isMobile ? 0.05 : 0.1.sw),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -71,15 +74,13 @@ class _ClockState extends State<Clock> {
   @override
   Widget build(BuildContext context) {
     timeProvider = Provider.of<TimeProvider>(context);
-    return Container(
-      child: Text(
-        '${timeProvider.formattedTime}',
-        style: GoogleFonts.anton(
-          textStyle: TextStyle(
-            fontSize: 40.sp,
-            fontWeight: FontWeight.w500,
-            color: Color.fromRGBO(196, 196, 196, 1),
-          ),
+    return Text(
+      '${timeProvider.formattedTime}',
+      style: GoogleFonts.anton(
+        textStyle: TextStyle(
+          fontSize: 40.sp,
+          fontWeight: FontWeight.w500,
+          color: Color.fromRGBO(196, 196, 196, 1),
         ),
       ),
     );
