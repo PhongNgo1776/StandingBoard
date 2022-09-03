@@ -1,3 +1,2 @@
-- Change <base href=".$FLUTTER_BASE_HREF"> in index.html -> <base href="/"> for debugging and otherwise.
 - Release build command: flutter build web.
 - Copy all files and folders in folder: build/web, and then paste and replace all to folder docs.
