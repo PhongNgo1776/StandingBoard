@@ -65,7 +65,7 @@ class _ClockState extends State<Clock> {
   @override
   void initState() {
     timeProvider = Provider.of<TimeProvider>(context, listen: false);
-    SchedulerBinding.instance?.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       timeProvider.setup();
     });
     super.initState();

@@ -28,7 +28,6 @@ class _CustomScrollbarState extends State<CustomScrollbar> {
       padding: const EdgeInsets.only(right: 1),
       child: showScrollbar
           ? RawScrollbar(
-              isAlwaysShown: widget.isAlwaysShown,
               thumbColor: Colors.grey,
               thickness: 4,
               radius: Radius.circular(5),

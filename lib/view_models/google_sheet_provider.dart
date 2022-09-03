@@ -64,28 +64,29 @@ class GoogleSheetProvider extends ChangeNotifier {
     _sheet = _spreadsheet.worksheetByTitle('Tournament')!;
 
     try {
-      await _fetchSetting();
-      await _fetchTournamentData();
+      await _fetchData();
     } catch (e) {
     } finally {
       timer?.cancel();
       timer = Timer.periodic(
           Duration(seconds: _setting?.intervalReloading ?? 10),
-          (_) => _fetchTournamentData());
+          (_) => _fetchData());
     }
     return 'ok';
   }
 
-  Future<void> _fetchTournamentData() async {
-    print('----------FETCHING TOURNAMENT DATA');
+  Future<void> _fetchData() async {
+    print('----------FETCHING DATA');
     _dataRows =
-        await _sheet.values.allRows(fromRow: 4, fromColumn: 2, length: 15);
+        await _sheet.values.allRows(fromRow: 4, fromColumn: 2, length: 22);
 
+    _readSetting();
     _readTournamentFramework();
     _readPointsInfo();
     _readStandings();
     _readMatches();
     _readWinner();
+
     print('----------DONE DATA');
     notifyListeners();
   }
@@ -140,6 +141,17 @@ class GoogleSheetProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> _readSetting() async {
+    var settingColumnIndex = 20;
+    _setting = Setting(
+        header: _dataRows[0][settingColumnIndex],
+        footer: _dataRows[1][settingColumnIndex],
+        alternativeFooter: _dataRows[2][settingColumnIndex],
+        logoURL: _dataRows[3][settingColumnIndex],
+        intervalReloading:
+            int.tryParse(_dataRows[4][settingColumnIndex]) ?? 10);
+  }
+
   void _readStandings() {
     const fromIndex = 12;
     const rowIdex = 11;
@@ -190,16 +202,16 @@ class GoogleSheetProvider extends ChangeNotifier {
     _rounds.forEach((round) => round.debugLog());
   }
 
-  Future<void> _fetchSetting() async {
-    final sheet = _spreadsheet.worksheetByTitle('Setting')!;
-    final dataRows = await sheet.values.allRows(length: 2);
-    _setting = Setting(
-        header: dataRows[0][1],
-        footer: dataRows[1][1],
-        alternativeFooter: dataRows[2][1],
-        logoURL: dataRows[3][1],
-        intervalReloading: int.tryParse(dataRows[4][1]) ?? 10);
-  }
+  // Future<void> _fetchSetting() async {
+  //   final sheet = _spreadsheet.worksheetByTitle('Setting')!;
+  //   final dataRows = await sheet.values.allRows(length: 2);
+  //   _setting = Setting(
+  //       header: dataRows[0][1],
+  //       footer: dataRows[1][1],
+  //       alternativeFooter: dataRows[2][1],
+  //       logoURL: dataRows[3][1],
+  //       intervalReloading: int.tryParse(dataRows[4][1]) ?? 10);
+  // }
 
   String get winnerPoint => standings
       .firstWhere((element) => element.team == winner)
