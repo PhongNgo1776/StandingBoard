@@ -9,14 +9,18 @@ import 'data_info_table.dart';
 import 'footer.dart';
 import 'header.dart';
 
-class HomeScreen extends StatefulWidget {
+class DetailTouramentScreen extends StatefulWidget {
+  final String name;
+
+  const DetailTouramentScreen({Key? key, required this.name}) : super(key: key);
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<DetailTouramentScreen> createState() => _DetailTouramentScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _DetailTouramentScreenState extends State<DetailTouramentScreen> {
   @override
   Widget build(BuildContext context) {
+    print('-----------name: ${widget.name}');
     Provider.of<GoogleSheetProvider>(context);
     return SafeArea(
       child: Scaffold(

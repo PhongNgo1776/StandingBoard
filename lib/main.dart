@@ -4,11 +4,13 @@ import 'package:intl/date_symbol_data_local.dart';
 // import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:standingboard/utils/utils.dart';
-import 'home_screen/home_screen.dart';
+import 'detail_tourament_screen/detail_tournament_screen.dart';
+import 'tourament_list_screen/tourament_list_screen.dart';
 import 'view_models/google_sheet_provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
 import 'view_models/time_provider.dart';
+import 'widgets/scale_route.dart';
 
 void main() {
   tz.initializeTimeZones();
@@ -29,7 +31,19 @@ void main() {
             return MaterialApp(
               title: 'StandingBoard',
               debugShowCheckedModeBanner: false,
-              home: HomeScreen(),
+              home: TouramentListScreen(),
+              onGenerateRoute: (RouteSettings settings) {
+                switch (settings.name) {
+                  case '/detail':
+                    var name = settings.arguments as String;
+                    return ScaleRoute(
+                        widget: DetailTouramentScreen(name: name),
+                        settings: settings);
+                  default:
+                    return ScaleRoute(
+                        widget: TouramentListScreen(), settings: settings);
+                }
+              },
             );
           }),
     ),
