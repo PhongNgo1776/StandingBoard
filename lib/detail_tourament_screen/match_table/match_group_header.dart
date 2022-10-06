@@ -22,7 +22,7 @@ class MatchGroupHeader extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.fromLTRB(50.w, 5.h, 0, 5.h),
             decoration: BoxDecoration(
-              color: TITLE_BG_COLOR,
+              color: titelBgColor,
               borderRadius: BorderRadius.circular(10.w),
             ),
             child: Row(
@@ -63,7 +63,7 @@ class MatchGroupHeader extends StatelessWidget {
               vertical: 5.h,
             ),
             decoration: BoxDecoration(
-              color: TITLE_BG_COLOR,
+              color: titelBgColor,
               borderRadius: BorderRadius.circular(10.w),
             ),
             child: Text(

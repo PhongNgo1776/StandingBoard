@@ -25,7 +25,6 @@ class _DataInfoTableState extends State<DataInfoTable> {
   @override
   void initState() {
     gameProvider = Provider.of<GoogleSheetProvider>(context, listen: false);
-    gameProvider.init();
     super.initState();
   }
 

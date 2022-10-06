@@ -86,7 +86,7 @@ class MatchInfo extends StatelessWidget {
             maintainState: true,
             child: Container(
               decoration: BoxDecoration(
-                color: TITLE_BG_COLOR,
+                color: titelBgColor,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(5.w),
                   bottomRight: Radius.circular(5.w),

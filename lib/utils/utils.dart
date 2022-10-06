@@ -11,6 +11,13 @@ TextStyle titleTextStyle = GoogleFonts.anton(
   ),
 );
 
+TextStyle bigTitleTextStyle = GoogleFonts.anton(
+  textStyle: TextStyle(
+    color: Colors.white,
+    fontSize: FontSize.xlarge,
+  ),
+);
+
 bool get isMobile {
   var width = Get.width;
   var height = Get.height;
