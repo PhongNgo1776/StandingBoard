@@ -60,12 +60,16 @@ class ColumnData extends StatelessWidget {
         DataWrapper(
           flex: isMobile ? null : 8,
           header: MatchGroupHeader(titleTextStyle: titleTextStyle),
-          body: gameProvider.rounds.isEmpty ? LoadingMsg() : MatchGroupBody(),
+          body: (gameProvider.currentCup?.rounds.isEmpty ?? true)
+              ? LoadingMsg()
+              : MatchGroupBody(),
         ),
         SizedBox(height: isMobile ? 30.h : 0),
         DataWrapper(
           flex: isMobile ? null : 2,
-          body: gameProvider.rounds.isEmpty ? SizedBox() : OtherInfoTable(),
+          body: (gameProvider.currentCup?.rounds.isEmpty ?? true)
+              ? SizedBox()
+              : OtherInfoTable(),
         ),
       ],
     );

@@ -27,22 +27,31 @@ class OtherInfoTable extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TitleValueItem(
-                title: gameProvider.tournamentFramework.timeBetweenMatchesName,
-                value: gameProvider.tournamentFramework.timeBetweenMatchesValue
-                        .toString() +
-                    ' mins',
+                title: gameProvider.currentCup?.tournamentFramework
+                        .timeBetweenMatchesName ??
+                    '',
+                value: gameProvider
+                        .currentCup?.tournamentFramework.timeBetweenMatchesValue
+                        .toString() ??
+                    '' + ' mins',
               ),
               TitleValueItem(
-                title: gameProvider.tournamentFramework.matchDurationName,
-                value: gameProvider.tournamentFramework.matchDurationValue
-                        .toString() +
-                    ' mins',
+                title: gameProvider
+                        .currentCup?.tournamentFramework.matchDurationName ??
+                    '',
+                value: gameProvider
+                        .currentCup?.tournamentFramework.matchDurationValue
+                        .toString() ??
+                    '' + ' mins',
               ),
               TitleValueItem(
-                title: gameProvider.tournamentFramework.breakDurationName,
-                value: gameProvider.tournamentFramework.breakDurationValue
-                        .toString() +
-                    ' mins',
+                title: gameProvider
+                        .currentCup?.tournamentFramework.breakDurationName ??
+                    '',
+                value: gameProvider
+                        .currentCup?.tournamentFramework.breakDurationValue
+                        .toString() ??
+                    '' + ' mins',
               ),
             ],
           ),
@@ -53,16 +62,21 @@ class OtherInfoTable extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TitleValueItem(
-                title: gameProvider.pointInfo.winTitle,
-                value: gameProvider.pointInfo.winValue.toString() + ' points',
+                title: gameProvider.currentCup?.pointInfo.winTitle ?? '',
+                value: gameProvider.currentCup?.pointInfo.winValue.toString() ??
+                    '' + ' points',
               ),
               TitleValueItem(
-                title: gameProvider.pointInfo.drawTitle,
-                value: gameProvider.pointInfo.drawValue.toString() + ' points',
+                title: gameProvider.currentCup?.pointInfo.drawTitle ?? '',
+                value:
+                    gameProvider.currentCup?.pointInfo.drawValue.toString() ??
+                        '' + ' points',
               ),
               TitleValueItem(
-                title: gameProvider.pointInfo.lossTitle,
-                value: gameProvider.pointInfo.lossValue.toString() + ' points',
+                title: gameProvider.currentCup?.pointInfo.lossTitle ?? '',
+                value:
+                    gameProvider.currentCup?.pointInfo.lossValue.toString() ??
+                        '' + ' points',
               ),
             ],
           ),
@@ -72,10 +86,12 @@ class OtherInfoTable extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: List.generate(
-              gameProvider.standings.length,
+              gameProvider.currentCup?.standings.length ?? 0,
               (index) => TitleValueItem(
-                title: gameProvider.standings[index].team,
-                value: gameProvider.standings[index].point.toString(),
+                title: gameProvider.currentCup?.standings[index].team ?? '',
+                value: gameProvider.currentCup?.standings[index].point
+                        .toString() ??
+                    '',
               ),
             ),
           ),
@@ -86,8 +102,8 @@ class OtherInfoTable extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TitleValueItem(
-                title: gameProvider.winner,
-                value: gameProvider.winnerPoint,
+                title: gameProvider.currentCup?.winner ?? '',
+                value: gameProvider.currentCup?.winnerPoint ?? '',
               ),
             ],
           ),

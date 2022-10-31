@@ -7,7 +7,7 @@ import 'fonts.dart';
 TextStyle titleTextStyle = GoogleFonts.anton(
   textStyle: TextStyle(
     color: Colors.white,
-    fontSize: FontSize.medium,
+    fontSize: FontSize.large,
   ),
 );
 

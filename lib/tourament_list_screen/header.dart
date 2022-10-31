@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:standingboard/utils/utils.dart';
 import 'package:standingboard/view_models/google_sheet_provider.dart';
-import 'package:standingboard/view_models/time_provider.dart';
 
 class Header extends StatelessWidget {
   const Header({
@@ -26,14 +24,14 @@ class Header extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Image.network(
-                gameProvider.setting?.logoURL ??
+                gameProvider.summaryLogo ??
                     'https://phongngo1776.github.io/StandingBoard/loading.gif',
                 width: 100.r,
               ),
               Container(
                 margin: EdgeInsets.only(left: 20.w),
                 child: Text(
-                  gameProvider.setting?.header ?? '',
+                  gameProvider.mainTitle,
                   style: GoogleFonts.anton(
                     textStyle: TextStyle(
                       color: Colors.white,
@@ -43,6 +41,18 @@ class Header extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 20.w),
+            child: Text(
+              gameProvider.subTitle,
+              style: GoogleFonts.anton(
+                textStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 40.sp,
+                ),
+              ),
+            ),
           ),
           Text(
             '4 ROUNDS PLAYED',

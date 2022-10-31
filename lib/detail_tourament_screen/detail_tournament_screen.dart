@@ -18,10 +18,11 @@ class DetailTouramentScreen extends StatefulWidget {
 }
 
 class _DetailTouramentScreenState extends State<DetailTouramentScreen> {
+  late GoogleSheetProvider provider;
   @override
   Widget build(BuildContext context) {
     print('-----------name: ${widget.name}');
-    Provider.of<GoogleSheetProvider>(context);
+    provider = Provider.of<GoogleSheetProvider>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,

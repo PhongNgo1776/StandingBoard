@@ -19,7 +19,8 @@ class Footer extends StatelessWidget {
       color: Color(0xFF202020),
       child: RichText(
         text: TextSpan(
-            text: gameProvider.setting?.footer ?? '',
+            text:
+                gameProvider.cupMap.entries.first.value?.setting?.footer ?? '',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w600,
@@ -27,7 +28,8 @@ class Footer extends StatelessWidget {
             ),
             children: [
               TextSpan(
-                text: ' ${gameProvider.setting?.alternativeFooter ?? ''}',
+                text:
+                    ' ${gameProvider.cupMap.entries.first.value?.setting?.alternativeFooter ?? ''}',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.normal,

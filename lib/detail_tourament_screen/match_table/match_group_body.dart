@@ -5,22 +5,10 @@ import 'package:standingboard/view_models/google_sheet_provider.dart';
 
 import 'match_group_item.dart';
 
-class MatchGroupBody extends StatefulWidget {
+class MatchGroupBody extends StatelessWidget {
   const MatchGroupBody({
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<MatchGroupBody> createState() => _MatchGroupBodyState();
-}
-
-class _MatchGroupBodyState extends State<MatchGroupBody> {
-  @override
-  void initState() {
-    var gameProvider = Provider.of<GoogleSheetProvider>(context, listen: false);
-    gameProvider.init();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +18,9 @@ class _MatchGroupBodyState extends State<MatchGroupBody> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: List.generate(
-          gameProvider.rounds.length,
+          gameProvider.currentCup?.rounds.length ?? 0,
           (index) {
-            var round = gameProvider.rounds[index];
+            var round = gameProvider.currentCup!.rounds[index];
             return MatchGroupItem(
               showBreakTitle: index > 0,
               roundNum: round.roundNumber.toString(),
