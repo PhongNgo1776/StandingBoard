@@ -50,7 +50,7 @@ class _TouramentListScreenState extends State<TouramentListScreen> {
                             margin: EdgeInsets.symmetric(horizontal: 0.02.sw),
                             padding: EdgeInsets.fromLTRB(50.w, 5.h, 0, 5.h),
                             decoration: BoxDecoration(
-                              color: titelBgColor,
+                              color: titleBgColor,
                               borderRadius: BorderRadius.circular(10.w),
                             ),
                             child: Row(

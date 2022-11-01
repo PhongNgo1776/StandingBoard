@@ -25,7 +25,8 @@ class GoogleSheetProvider extends ChangeNotifier {
 
   Future<String> init() async {
     _spreadsheet = await gsheets.spreadsheet(spreedsheetId);
-    Worksheet _cupNameSheet = _spreadsheet.worksheetByTitle('Cup Names')!;
+
+    Worksheet _cupNameSheet = _spreadsheet.sheets.first;
     List<List<String>> _cupNameSheetDataRow = await _cupNameSheet.values
         .allRows(fromRow: 1, fromColumn: 1, length: 22);
 

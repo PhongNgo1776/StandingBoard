@@ -97,7 +97,7 @@ class MatchRow extends StatelessWidget {
             padding: EdgeInsets.all(5.w),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.r),
-              color: titelBgColor,
+              color: titleBgColor,
             ),
             child: Text(
               rightTeamRound,

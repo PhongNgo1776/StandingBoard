@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:standingboard/utils/utils.dart';
 import 'package:standingboard/view_models/google_sheet_provider.dart';
 
+import '../view_models/google_sheet_helper.dart';
+
 class Header extends StatelessWidget {
   const Header({
     Key? key,
@@ -55,7 +57,7 @@ class Header extends StatelessWidget {
             ),
           ),
           Text(
-            '4 ROUNDS PLAYED',
+            '${totalPlayedCups(gameProvider.cupMap).toString()} ROUNDS PLAYED',
             style: GoogleFonts.anton(
               textStyle: TextStyle(
                 color: Colors.white,

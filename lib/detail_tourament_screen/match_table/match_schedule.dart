@@ -45,7 +45,7 @@ class MatchInfo extends StatelessWidget {
       alignment: Alignment.center,
       margin: EdgeInsets.symmetric(vertical: 3.5.h),
       decoration: BoxDecoration(
-        color: isPlaying ? GRAY_BG_COLOR : Colors.transparent,
+        color: isPlaying ? greyBgColor : Colors.transparent,
         borderRadius: BorderRadius.circular(5.w),
       ),
       child: Row(
@@ -86,7 +86,7 @@ class MatchInfo extends StatelessWidget {
             maintainState: true,
             child: Container(
               decoration: BoxDecoration(
-                color: titelBgColor,
+                color: titleBgColor,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(5.w),
                   bottomRight: Radius.circular(5.w),

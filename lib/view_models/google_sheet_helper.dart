@@ -1,5 +1,6 @@
 import 'package:jiffy/jiffy.dart';
 
+import '../models/cup.dart';
 import '../models/match.dart';
 import '../models/point_info.dart';
 import '../models/round.dart';
@@ -126,4 +127,14 @@ List<Round> readRounds(List<List<String>> _dataRows) {
   });
 
   return _rounds;
+}
+
+bool isNotYetStarted(Cup? cup) {
+  return cup?.rounds.first.matches.first.result.team1Goals?.isEmpty ?? true;
+}
+
+int totalPlayedCups(Map<String, Cup?> cupMap) {
+  return cupMap.values
+      .map((cup) => isNotYetStarted(cup) ? 1 : 0)
+      .reduce((value, element) => value + element);
 }
