@@ -66,7 +66,7 @@ class _TouramentListScreenState extends State<TouramentListScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: 0.1.sw,
-                              vertical: 0.05.sh,
+                              vertical: 0.02.sh,
                             ),
                             child: TeamRanking(
                               rank: 1,
@@ -84,6 +84,7 @@ class _TouramentListScreenState extends State<TouramentListScreen> {
                           ),
                           Spacer(),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: provider.cupMap.keys
                                 .map((e) => TeamRankingRound(cupName: e))
                                 .toList(),

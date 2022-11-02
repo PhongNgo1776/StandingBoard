@@ -85,7 +85,9 @@ List<Standing> readStandings(List<List<String>> _dataRows) {
     if (dataRow.length < 13) continue;
     var team = dataRow[fromIndex];
     var point = dataRow[fromIndex + 1];
-    _standings.add(Standing(team: team, point: int.tryParse(point)!));
+    if (team.isNotEmpty) {
+      _standings.add(Standing(team: team, point: int.tryParse(point) ?? 0));
+    }
   }
 
   return _standings;

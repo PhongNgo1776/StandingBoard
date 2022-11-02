@@ -30,6 +30,7 @@ class TeamRankingRound extends StatelessWidget {
                 Navigator.pushNamed(context, '/detail', arguments: cupName);
               },
               child: Ink(
+                padding: EdgeInsets.symmetric(vertical: 0.01.sh),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: _isNotYetStarted ? greyBgColor : titleBgColor,
@@ -51,7 +52,7 @@ class TeamRankingRound extends StatelessWidget {
                       ),
                     )
                     .toList() ??
-                [SizedBox()],
+                [SizedBox()]
           ],
         ),
       ),
@@ -78,7 +79,7 @@ class PointTeam extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 0.025.sw,
-        vertical: 0.01.sh,
+        vertical: 0.005.sh,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -51,13 +51,13 @@ class GoogleSheetProvider extends ChangeNotifier {
           cupMap.entries.first.value?.setting?.intervalReloading ?? 10;
       timer = Timer.periodic(
           Duration(seconds: intervalReloading), (_) => _fetchAllCups());
-      notifyListeners();
     }
     return 'ok';
   }
 
   Future<void> _fetchAllCups() async {
     await Future.wait(cupMap.keys.map((e) => _fetchCup(e)).toList());
+    notifyListeners();
   }
 
   Future<void> _fetchCup(String cupName) async {
