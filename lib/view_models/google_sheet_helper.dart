@@ -137,6 +137,6 @@ bool isNotYetStarted(Cup? cup) {
 
 int totalPlayedCups(Map<String, Cup?> cupMap) {
   return cupMap.values
-      .map((cup) => isNotYetStarted(cup) ? 1 : 0)
+      .map((cup) => isNotYetStarted(cup) ? 0 : 1)
       .reduce((value, element) => value + element);
 }

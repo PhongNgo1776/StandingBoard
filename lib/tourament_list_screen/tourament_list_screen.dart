@@ -9,7 +9,7 @@ import 'package:standingboard/view_models/google_sheet_provider.dart';
 import '../detail_tourament_screen/footer.dart';
 import '../utils/colors.dart';
 import 'header.dart';
-import 'team_ranking.dart';
+import 'middle_ranking_group.dart';
 import 'team_ranking_round.dart';
 
 class TouramentListScreen extends StatefulWidget {
@@ -63,25 +63,7 @@ class _TouramentListScreenState extends State<TouramentListScreen> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 0.1.sw,
-                              vertical: 0.02.sh,
-                            ),
-                            child: TeamRanking(
-                              rank: 1,
-                              teamName:
-                                  provider.summaryPoints.entries.first.key,
-                              points:
-                                  provider.summaryPoints.entries.first.value,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 0.1.sw,
-                            ),
-                            child: Column(children: rankings),
-                          ),
+                          MiddleRankingGroup(provider: provider),
                           Spacer(),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,21 +81,5 @@ class _TouramentListScreenState extends State<TouramentListScreen> {
               ),
       ),
     );
-  }
-
-  List<Widget> get rankings {
-    var rankings = <TeamRanking>[];
-    var entries = provider.summaryPoints.entries.toList();
-    for (var i = 1; i < entries.length; i++) {
-      rankings.add(
-        TeamRanking(
-          rank: i + 1,
-          teamName: entries[i].key,
-          points: entries[i].value,
-        ),
-      );
-    }
-
-    return rankings;
   }
 }

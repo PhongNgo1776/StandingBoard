@@ -12,7 +12,6 @@ class GoogleSheetProvider extends ChangeNotifier {
 
   late List<List<String>> _dataRows;
   Map<String, Cup?> cupMap = {};
-  Cup? currentCup;
 
   late Worksheet _sheet;
   late Spreadsheet _spreadsheet;
@@ -22,6 +21,9 @@ class GoogleSheetProvider extends ChangeNotifier {
   String subTitle = '';
   String headerTitle = '';
   String? summaryLogo;
+  String? currentCupName;
+
+  Cup? get currentCup => cupMap[currentCupName];
 
   Future<String> init() async {
     _spreadsheet = await gsheets.spreadsheet(spreedsheetId);
@@ -79,7 +81,7 @@ class GoogleSheetProvider extends ChangeNotifier {
   }
 
   void setCurrentCup(String cupName) {
-    currentCup = cupMap[cupName];
+    currentCupName = cupName;
   }
 
   Map<String, int?> get summaryPoints {

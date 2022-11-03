@@ -12,8 +12,9 @@ class MatchGroupBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var gameProvider = Provider.of<GoogleSheetProvider>(context, listen: false);
+    var gameProvider = Provider.of<GoogleSheetProvider>(context);
     return Container(
+      key: ValueKey('MatchGroupBody-${gameProvider.currentCup}'),
       margin: EdgeInsets.only(top: 20.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -22,6 +23,7 @@ class MatchGroupBody extends StatelessWidget {
           (index) {
             var round = gameProvider.currentCup!.rounds[index];
             return MatchGroupItem(
+              key: ValueKey('MatchGroupItem$index'),
               showBreakTitle: index > 0,
               roundNum: round.roundNumber.toString(),
               leftTeamFirstRound: round.matches[0].team1,

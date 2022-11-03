@@ -22,7 +22,7 @@ class _DetailTouramentScreenState extends State<DetailTouramentScreen> {
   @override
   Widget build(BuildContext context) {
     print('-----------name: ${widget.name}');
-    provider = Provider.of<GoogleSheetProvider>(context);
+    provider = Provider.of<GoogleSheetProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
