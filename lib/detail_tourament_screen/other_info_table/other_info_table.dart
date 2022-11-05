@@ -6,7 +6,9 @@ import 'package:standingboard/view_models/google_sheet_provider.dart';
 
 import 'other_info_body_container.dart';
 import 'other_info_header.dart';
+import 'point_table.dart';
 import 'title_value_item.dart';
+import 'tournament_framework_table.dart';
 
 class OtherInfoTable extends StatelessWidget {
   const OtherInfoTable({
@@ -18,69 +20,8 @@ class OtherInfoTable extends StatelessWidget {
     var gameProvider = Provider.of<GoogleSheetProvider>(context, listen: false);
     return Column(
       children: [
-        OtherInfoHeader(
-          title: 'Tournament framework',
-          needMarginTop: false,
-        ),
-        OtherInfoBodyContainer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              TitleValueItem(
-                title: gameProvider.currentCup?.tournamentFramework
-                        .timeBetweenMatchesName ??
-                    '',
-                value: gameProvider
-                        .currentCup?.tournamentFramework.timeBetweenMatchesValue
-                        .toString() ??
-                    '' + ' mins',
-              ),
-              TitleValueItem(
-                title: gameProvider
-                        .currentCup?.tournamentFramework.matchDurationName ??
-                    '',
-                value: gameProvider
-                        .currentCup?.tournamentFramework.matchDurationValue
-                        .toString() ??
-                    '' + ' mins',
-              ),
-              TitleValueItem(
-                title: gameProvider
-                        .currentCup?.tournamentFramework.breakDurationName ??
-                    '',
-                value: gameProvider
-                        .currentCup?.tournamentFramework.breakDurationValue
-                        .toString() ??
-                    '' + ' mins',
-              ),
-            ],
-          ),
-        ),
-        OtherInfoHeader(title: 'Points'),
-        OtherInfoBodyContainer(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              TitleValueItem(
-                title: gameProvider.currentCup?.pointInfo.winTitle ?? '',
-                value: gameProvider.currentCup?.pointInfo.winValue.toString() ??
-                    '' + ' points',
-              ),
-              TitleValueItem(
-                title: gameProvider.currentCup?.pointInfo.drawTitle ?? '',
-                value:
-                    gameProvider.currentCup?.pointInfo.drawValue.toString() ??
-                        '' + ' points',
-              ),
-              TitleValueItem(
-                title: gameProvider.currentCup?.pointInfo.lossTitle ?? '',
-                value:
-                    gameProvider.currentCup?.pointInfo.lossValue.toString() ??
-                        '' + ' points',
-              ),
-            ],
-          ),
-        ),
+        if (!isMobile) TournamentFrameworkTable(),
+        if (!isMobile) PointTable(),
         OtherInfoHeader(title: 'Standings'),
         OtherInfoBodyContainer(
           child: Column(

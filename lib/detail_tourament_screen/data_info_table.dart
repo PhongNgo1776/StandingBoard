@@ -31,7 +31,8 @@ class _DataInfoTableState extends State<DataInfoTable> {
   @override
   Widget build(BuildContext context) {
     var scrollController = ScrollController();
-    return Container(
+    gameProvider = Provider.of<GoogleSheetProvider>(context);
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: isMobile ? 0.02.sw : 0.05.sw),
       child: isMobile
           ? CustomScrollbar(

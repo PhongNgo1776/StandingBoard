@@ -27,7 +27,7 @@ class Header extends StatelessWidget {
             children: [
               Image.network(
                 gameProvider.summaryLogo ??
-                    'https://phongngo1776.github.io/StandingBoard/loading.gif',
+                    'https://standings.midtnorskhockeyliga.com/loading.gif',
                 width: 100.r,
               ),
               Container(

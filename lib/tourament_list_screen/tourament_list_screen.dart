@@ -35,51 +35,58 @@ class _TouramentListScreenState extends State<TouramentListScreen> {
         body: provider.isLoading
             ? Center(
                 child: Image.network(
-                    'https://phongngo1776.github.io/StandingBoard/loading.gif'),
+                  'https://standings.midtnorskhockeyliga.com/loading.gif',
+                  width: 0.2.sw,
+                ),
               )
             : InteractiveViewer(
                 minScale: 1,
                 maxScale: isMobile ? 2 : 1,
-                child: Column(
-                  children: [
-                    Header(),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 0.02.sw),
-                            padding: EdgeInsets.fromLTRB(50.w, 5.h, 0, 5.h),
-                            decoration: BoxDecoration(
-                              color: titleBgColor,
-                              borderRadius: BorderRadius.circular(10.w),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  provider.headerTitle,
-                                  textAlign: TextAlign.left,
-                                  style: titleTextStyle,
-                                ),
-                              ],
-                            ),
-                          ),
-                          MiddleRankingGroup(provider: provider),
-                          Spacer(),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: provider.cupMap.keys
-                                .map((e) => TeamRankingRound(cupName: e))
-                                .toList(),
-                          ),
-                          Spacer(),
-                        ],
-                      ),
-                    ),
-                    Footer()
-                  ],
-                ),
+                child: isMobile
+                    ? SingleChildScrollView(child: _screenContent)
+                    : _screenContent,
               ),
       ),
     );
   }
+
+  Widget get _screenContent => Column(
+        children: [
+          Header(),
+          isMobile ? _bodyContent : Expanded(child: _bodyContent),
+          Footer(),
+        ],
+      );
+
+  Widget get _bodyContent => Column(
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 0.02.sw),
+            padding: EdgeInsets.fromLTRB(50.w, 5.h, 0, 5.h),
+            decoration: BoxDecoration(
+              color: titleBgColor,
+              borderRadius: BorderRadius.circular(10.w),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  provider.headerTitle,
+                  textAlign: TextAlign.left,
+                  style: titleTextStyle,
+                ),
+              ],
+            ),
+          ),
+          MiddleRankingGroup(provider: provider),
+          if (!isMobile) Spacer(),
+          Flex(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            direction: isMobile ? Axis.vertical : Axis.horizontal,
+            children: provider.cupMap.keys
+                .map((e) => TeamRankingRound(cupName: e))
+                .toList(),
+          ),
+          if (!isMobile) Spacer(),
+        ],
+      );
 }

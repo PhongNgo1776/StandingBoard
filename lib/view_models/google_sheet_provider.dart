@@ -26,39 +26,52 @@ class GoogleSheetProvider extends ChangeNotifier {
   Cup? get currentCup => cupMap[currentCupName];
 
   Future<String> init() async {
-    _spreadsheet = await gsheets.spreadsheet(spreedsheetId);
+    if (isLoading) {
+      _spreadsheet = await gsheets.spreadsheet(spreedsheetId);
 
-    Worksheet _cupNameSheet = _spreadsheet.sheets.first;
-    List<List<String>> _cupNameSheetDataRow = await _cupNameSheet.values
-        .allRows(fromRow: 1, fromColumn: 1, length: 22);
+      Worksheet _cupNameSheet = _spreadsheet.sheets.first;
+      List<List<String>> _cupNameSheetDataRow = await _cupNameSheet.values
+          .allRows(fromRow: 1, fromColumn: 1, length: 22);
 
-    mainTitle = _cupNameSheetDataRow.first[3];
-    subTitle = _cupNameSheetDataRow[1][3];
-    summaryLogo = _cupNameSheetDataRow[2][3];
-    headerTitle = _cupNameSheetDataRow[3][3];
+      mainTitle = _cupNameSheetDataRow.first[3];
+      subTitle = _cupNameSheetDataRow[1][3];
+      summaryLogo = _cupNameSheetDataRow[2][3];
+      headerTitle = _cupNameSheetDataRow[3][3];
 
-    var _cupNameList = [];
-    for (var i = 1; i < _cupNameSheetDataRow.length; i++) {
-      _cupNameList.add(_cupNameSheetDataRow[i].first);
-    }
+      var _cupNameList = [];
+      for (var i = 1; i < _cupNameSheetDataRow.length; i++) {
+        _cupNameList.add(_cupNameSheetDataRow[i].first);
+      }
 
-    cupMap = {for (var v in _cupNameList) v: null};
+      cupMap = {for (var v in _cupNameList) v: null};
 
-    try {
-      await _fetchAllCups();
-    } finally {
-      isLoading = false;
-      timer?.cancel();
-      var intervalReloading =
-          cupMap.entries.first.value?.setting?.intervalReloading ?? 10;
-      timer = Timer.periodic(
-          Duration(seconds: intervalReloading), (_) => _fetchAllCups());
+      try {
+        await _fetchAllCups();
+      } finally {
+        isLoading = false;
+        timer?.cancel();
+        var intervalReloading =
+            cupMap.entries.first.value?.setting?.intervalReloading ?? 10;
+        timer = Timer.periodic(
+            Duration(seconds: intervalReloading), (_) => _fetchAllCups());
+      }
     }
     return 'ok';
   }
 
   Future<void> _fetchAllCups() async {
-    await Future.wait(cupMap.keys.map((e) => _fetchCup(e)).toList());
+    if (currentCupName?.isNotEmpty ?? false) {
+      await _fetchCup(currentCupName!);
+    } else {
+      await Future.wait(cupMap.keys.map((e) => _fetchCup(e)).toList());
+    }
+
+    notifyListeners();
+  }
+
+  void clearCurrentCupName() {
+    currentCupName = null;
+    Future.delayed(Duration(milliseconds: 200), () => _fetchAllCups());
     notifyListeners();
   }
 

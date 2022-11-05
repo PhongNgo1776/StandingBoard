@@ -33,12 +33,11 @@ void main() {
               debugShowCheckedModeBanner: false,
               home: TouramentListScreen(),
               onGenerateRoute: (RouteSettings settings) {
-                switch (settings.name) {
+                var mainPath = settings.name?.split('?').first;
+                switch (mainPath) {
                   case '/detail':
-                    var name = settings.arguments as String;
                     return ScaleRoute(
-                        widget: DetailTouramentScreen(name: name),
-                        settings: settings);
+                        widget: DetailTouramentScreen(), settings: settings);
                   default:
                     return ScaleRoute(
                         widget: TouramentListScreen(), settings: settings);

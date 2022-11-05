@@ -17,44 +17,51 @@ class TeamRankingRound extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return isMobile
+        ? _getContent(context)
+        : Expanded(child: _getContent(context));
+  }
+
+  Widget _getContent(BuildContext context) {
     var provider = Provider.of<GoogleSheetProvider>(context);
     var _isNotYetStarted = isNotYetStarted(provider.cupMap[cupName]);
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 0.01.sw),
-        child: Column(
-          children: [
-            InkWell(
-              onTap: () {
-                provider.setCurrentCup(cupName);
-                Navigator.pushNamed(context, '/detail', arguments: cupName);
-              },
-              child: Ink(
-                padding: EdgeInsets.symmetric(vertical: 0.01.sh),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: _isNotYetStarted ? greyBgColor : titleBgColor,
-                  borderRadius: BorderRadius.circular(10.w),
-                ),
-                child: Text(
-                  cupName,
-                  textAlign: TextAlign.center,
-                  style: titleTextStyle,
-                ),
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 0.01.sw),
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/detail?cupName=$cupName',
+              );
+            },
+            child: Ink(
+              padding: EdgeInsets.symmetric(vertical: 0.01.sh),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: _isNotYetStarted ? greyBgColor : titleBgColor,
+                borderRadius: BorderRadius.circular(10.w),
+              ),
+              child: Text(
+                cupName,
+                textAlign: TextAlign.center,
+                style: titleTextStyle,
               ),
             ),
-            ...provider.cupMap[cupName]?.standings
-                    .map(
-                      (e) => PointTeam(
-                        teamName: e.team,
-                        points: e.point,
-                        isNotYetStarted: _isNotYetStarted,
-                      ),
-                    )
-                    .toList() ??
-                [SizedBox()]
-          ],
-        ),
+          ),
+          ...provider.cupMap[cupName]?.standings
+                  .map(
+                    (e) => PointTeam(
+                      teamName: e.team,
+                      points: e.point,
+                      isNotYetStarted: _isNotYetStarted,
+                    ),
+                  )
+                  .toList() ??
+              [SizedBox()]
+        ],
       ),
     );
   }
@@ -78,7 +85,7 @@ class PointTeam extends StatelessWidget {
         color: isNotYetStarted ? Colors.grey : Colors.white);
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 0.025.sw,
+        horizontal: isMobile ? 0.1.sw : 0.025.sw,
         vertical: 0.005.sh,
       ),
       child: Row(
