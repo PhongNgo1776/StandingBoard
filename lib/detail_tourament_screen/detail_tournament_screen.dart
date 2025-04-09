@@ -41,7 +41,7 @@ class _DetailTouramentScreenState extends State<DetailTouramentScreen> {
       child: provider.isLoading
           ? Center(
               child: Image.network(
-                'https://standings.midtnorskhockeyliga.com/loading.gif',
+                'https://phongngo1776.github.io/StandingBoard/loading.gif',
                 width: 0.2.sw,
               ),
             )
